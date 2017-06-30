@@ -1,0 +1,36 @@
+Package: diffpriv
+Type: Package
+Title: Generic Mechanisms for Differential Privacy
+Version: 0.1.0.900
+Date: 2017-06-13
+Authors@R: c(
+    person(c("Benjamin", "I.", "P."), "Rubinstein", email = "brubinstein@unimelb.edu.au", role = c("aut", "cre")),
+    person("Francesco", "Alda", email = "francesco.alda@gmail.com", role = "aut"))
+Description: An implementation of major general-purpose mechanisms for privatizing
+    statistics, models, and machine learners, within the framework of differential
+    privacy of Dwork et al. (2006). Example mechanisms include the Laplace
+    mechanism for releasing numeric aggregates, and the exponential mechanism for
+    releasing set elements. A sensitivity sampler (Rubinstein & Alda, 2017) permits
+    sampling target non-private function sensitivity; combined with the generic
+    mechanisms, it permits turn-key privatization of arbitrary programs.
+License: MIT + file LICENSE
+LazyData: TRUE
+Depends: R (>= 3.4.0)
+Imports:
+    gsl,
+    methods,
+    stats
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
+Suggests:
+    randomNames,
+    testthat,
+    knitr
+Collate:
+    'diffpriv.R'
+    'utils.R'
+    'privacy_params.R'
+    'mechanisms.R'
+    'exponential_mechanism.R'
+    'laplace_mechanism.R'
+    'sensitivity_sampler.R'

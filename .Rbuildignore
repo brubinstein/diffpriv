@@ -1,0 +1,6 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^desktop.ini$
+^README\.Rmd$
+^README-.*\.png$
+^NEWS\.md$
