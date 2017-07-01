@@ -4,4 +4,4 @@ sudo: true
 dist: trusty
 
 before_install:
-  - sudo apt-get install -qq --yes gsl-bin
+  - sudo apt-get install -qq --yes libgsl-dev
