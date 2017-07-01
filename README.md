@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-diffpriv
-========
+diffpriv <img src="man/figures/logo.png" align="right" />
+=========================================================
 
 The `diffpriv` package makes privacy-aware data science under differential privacy easy in R. Differentially-private mechanisms can release as responses to untrusted third parties, models fit on privacy-sensitive data. But due to the worst-case nature of the framework, mechanism development typically requires involved theoretical analysis. `diffpriv` offers a turn-key approach to differential privacy by automating this process with sensitivity sampling.
 
@@ -33,14 +33,14 @@ distr <- function(n) if (n==1) rnorm(1) else if (n>1) as.list(rnorm(n))
 mech <- sensitivitySampler(mech, oracle = distr, n = length(X), gamma = 0.1)
 #> Sampling sensitivity with m=285 gamma=0.1 k=285
 mech@sensitivity
-#> [1] 0.8136706
+#> [1] 0.9398667
 ```
 
 And finally, private responses on `X`
 
 ``` r
 releaseResponse(mech, privacyParams = DPParamsEps(epsilon=1), X = X)$response
-#> [1] -0.7720619
+#> [1] -2.430058
 ```
 
 Installation
