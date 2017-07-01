@@ -1,6 +1,7 @@
 language: r
-sudo: required
 cache: packages
+sudo: true
+dist: trusty
 
 before_install:
-  - sudo apt-get install -qq --yes libgsl10-dev
+  - sudo apt-get install -qq --yes libgsl0ldbl
