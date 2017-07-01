@@ -3,5 +3,11 @@ cache: packages
 sudo: true
 dist: trusty
 
+r_packages:
+  - covr
+
 before_install:
   - sudo apt-get install -qq --yes libgsl-dev
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'

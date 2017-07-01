@@ -2,7 +2,7 @@
 diffpriv <img src="man/figures/logo.png" align="right" />
 =========================================================
 
-[![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv)
+[![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master)
 
 Overview
 --------
@@ -16,7 +16,7 @@ Obtaining `diffpriv` is easy. From within R:
 
 ``` r
 ##  Install the development version of diffpriv from GitHub:
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("brubinstein/diffpriv")
 ```
 
