@@ -2,6 +2,8 @@
 diffpriv <img src="man/figures/logo.png" align="right" />
 =========================================================
 
+[![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv)
+
 Overview
 --------
 
