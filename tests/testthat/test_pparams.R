@@ -17,11 +17,6 @@ test_that("Valid privacy parameter objects", {
   expect_equal(DPParamsEps(epsilon = 1)@epsilon, 1)
 })
 
-test_that("Summarizing privacy parameter objects", {
-  expect_output(show(DPParamsEps(epsilon=1)),
-                "Differential privacy level e=1")
-})
-
 test_that("Getters get from privacy parameter objects", {
   expect_equal(getEpsilon(DPParamsEps(epsilon=1)), 1)
   expect_equal(getEpsilon(DPParamsDel(epsilon=2, delta=0.5)), 2)
