@@ -42,3 +42,9 @@ test_that(".linfty_norm produces expected values", {
   expect_equal(.linfty_norm(numeric()), 0)
   expect_equal(.linfty_norm(c(-1, 0, 0.5)), 1)
 })
+
+test_that(".constant_target is constant-valued", {
+  expect_equal(.constant_target(1), 0)
+  expect_equal(.constant_target(1:3), 0)
+  expect_equal(.constant_target("a"), 0)
+})
