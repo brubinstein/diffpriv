@@ -35,16 +35,29 @@ test_that("Setters set privacy parameter objects", {
   rm(x)
 })
 
-test_that("toGamma converts to DPParamsGam", {
+test_that("Privacy parameter show() prints", {
+  p <- DPParamsEps()
+  expect_output(show(p), "differential privacy level", ignore.case = TRUE)
+  p <- DPParamsDel()
+  expect_output(show(p), "differential privacy level", ignore.case = TRUE)
+  p <- DPParamsGam()
+  expect_output(show(p), "differential privacy level", ignore.case = TRUE)
+})
+
+test_that("toGamma() converts to DPParamsGam", {
   eps <- 1
   del <- 0.1
+  gam <- 0.2
   newgam <- 0.1
   ep <- DPParamsEps(epsilon = eps)
   dp <- DPParamsDel(epsilon = eps, delta = del)
+  gp <- DPParamsGam(epsilon = eps, delta = del, gamma = gam)
   expect_equal(getEpsilon(toGamma(ep,newgam)), eps)
   expect_equal(getDelta(toGamma(ep,newgam)), 0)
   expect_equal(getGamma(toGamma(ep,newgam)), newgam)
   expect_equal(getEpsilon(toGamma(dp,newgam)), eps)
   expect_equal(getDelta(toGamma(dp,newgam)), del)
   expect_equal(getGamma(toGamma(dp,newgam)), newgam)
+  expect_warning(gp <- toGamma(gp,newgam), "on DPParamsGam same as", ignore.case=TRUE)
+  expect_equal(getGamma(gp), newgam)
 })
