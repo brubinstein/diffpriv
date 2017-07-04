@@ -68,4 +68,7 @@ test_that(".generic_append() can append different types", {
   # character vectors
   expect_length(.generic_append(letters[1:9], letters[10]), 10)
   expect_length(.generic_append(character(0), "the brown fox"), 1)
+  # rejects unexepcted
+  expect_error(.generic_append(DPParamsEps(), 2), "unrecognized",
+    ignore.case = TRUE)
 })
