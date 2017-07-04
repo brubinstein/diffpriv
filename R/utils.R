@@ -109,3 +109,26 @@
 .constant_target <- function(X) {
   return(0)
 }
+
+#' Flexible concatenation.
+#'
+#' A helper function for concatenation.
+#'
+#' @param xs object of type matrix, data.frame, list, numeric, char.
+#' @param x object of type corresponding to a singleton element of \code{xs}:
+#'   such that for matrices/data frames \code{rbind()} runs without warning, or
+#'   for lists or vectors \code{[[]]} or \code{[]} subsetting can be used to
+#'   concatenate.
+#' @return The result of concatenating \code{xs} followed by \code{x}.
+.generic_append <- function(xs, x) {
+  if (is.matrix(xs) || is.data.frame(xs)) {
+    return(rbind(xs, x))
+  } else if (is.list(xs)) {
+    xs[[length(xs) + 1]] <- x
+    return(xs)
+  } else if (is.numeric(xs) || is.character(xs)) {
+    xs[length(xs) + 1] <- x
+    return(xs)
+  }
+  stop("Unrecognized xs type.")
+}

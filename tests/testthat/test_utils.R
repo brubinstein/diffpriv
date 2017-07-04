@@ -48,3 +48,24 @@ test_that(".constant_target is constant-valued", {
   expect_equal(.constant_target(1:3), 0)
   expect_equal(.constant_target("a"), 0)
 })
+
+test_that(".generic_append() can append different types", {
+  # lists
+  expect_length(.generic_append(as.list(1:9), 10), 10)
+  expect_length(.generic_append(list(), 1), 1)
+  # matrices
+  expect_equal(nrow(.generic_append(matrix(1:9, nrow=3), 1:3)), 4)
+  expect_equal(nrow(.generic_append(matrix(nrow=0, ncol=3),
+                                    matrix(1:3, nrow=1))), 1)
+  # data frames
+  D <- cbind(as.data.frame(matrix(1:9, nrow=3)), letters[1:3])
+  Dnew <- cbind(as.data.frame(matrix(1:3, nrow=1)), "d")
+  names(Dnew) <- names(D)
+  expect_equal(nrow(.generic_append(D, Dnew)), 4)
+  # numeric vectors
+  expect_length(.generic_append(1:9, 10), 10)
+  expect_length(.generic_append(numeric(), c(1)), 1)
+  # character vectors
+  expect_length(.generic_append(letters[1:9], letters[10]), 10)
+  expect_length(.generic_append(character(0), "the brown fox"), 1)
+})
