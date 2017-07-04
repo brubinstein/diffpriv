@@ -12,8 +12,11 @@ NULL
 #' \code{\link{DPMech-class}} unlike the preferred method.
 #'
 #' @param object an object of class \code{\link{DPMech-class}}.
-#' @param oracle a source of random databases, returning: list of records given
-#'   desired length > 1; single record given length 1.
+#' @param oracle a source of random databases. A function returning: list,
+#'   matrix/data.frame (data in rows), numeric/character vector of records if
+#'   given desired length > 1; or single record given length 1, respectively
+#'   a list element, a row/named row,  a single numeric/character. Whichever
+#'   type is used should be expected by \code{object@target}.
 #' @param n database size scalar positive numeric, integer-valued.
 #' @param m sensitivity sample size scalar positive numeric, integer-valued.
 #' @param k order statistic index in {1,...,\code{m}}.
@@ -25,9 +28,9 @@ NULL
 #'
 #' @examples
 #' ## Simple example with unbounded data hence no global sensitivity.
-#' f <- function(xs) mean(unlist(xs))
+#' f <- function(xs) mean(xs)
 #' m <- DPMechLaplace(target = f, dim = 1)
-#' P <- function(n) if (n > 1) as.list(rnorm(n)) else rnorm(1)
+#' P <- function(n) rnorm(n)
 #' m <- sensitivitySamplerManual(m, oracle = P, n = 100, m = 10, k = 10)
 #' m@sensitivity
 #'
@@ -51,8 +54,11 @@ setGeneric("sensitivitySamplerManual",
 #' \code{\link{DPMech-class}} unlike the preferred method.
 #'
 #' @param object an object of class \code{\link{DPMech-class}}.
-#' @param oracle a source of random databases, returning: list of records given
-#'   desired length > 1; single record given length 1.
+#' @param oracle a source of random databases. A function returning: list,
+#'   matrix/data.frame (data in rows), numeric/character vector of records if
+#'   given desired length > 1; or single record given length 1, respectively
+#'   a list element, a row/named row,  a single numeric/character. Whichever
+#'   type is used should be expected by \code{object@target}.
 #' @param n database size scalar positive numeric, integer-valued.
 #' @param m sensitivity sample size scalar positive numeric, integer-valued.
 #' @param k order statistic index in {1,...,\code{m}}.
@@ -65,9 +71,9 @@ setGeneric("sensitivitySamplerManual",
 #'
 #' @examples
 #' ## Simple example with unbounded data hence no global sensitivity.
-#' f <- function(xs) mean(unlist(xs))
+#' f <- function(xs) mean(xs)
 #' m <- DPMechLaplace(target = f, dim = 1)
-#' P <- function(n) if (n > 1) as.list(rnorm(n)) else rnorm(1)
+#' P <- function(n) rnorm(n)
 #' m <- sensitivitySamplerManual(m, oracle = P, n = 100, m = 10, k = 10)
 #' m@sensitivity
 #'
@@ -94,10 +100,8 @@ setMethod("sensitivitySamplerManual",
     for (i in 1:m) {
       db1 <- oracle(n-1)
       db2 <- db1
-      db1[[n]] <- oracle(1)
-      db2[[n]] <- oracle(1)
-      #r1 <- object@target(db1)
-      #r2 <- object@target(db2)
+      db1 <- .generic_append(db1, oracle(1))
+      db2 <- .generic_append(db2, oracle(1))
       Gs[i] <- sensitivityNorm(object, db1, db2)
     }
     Gs <- sort(Gs, decreasing = FALSE)
@@ -178,8 +182,11 @@ setMethod("sensitivitySamplerManual",
 #' mechanism's \code{sensitivity}.
 #'
 #' @param object an object of class \code{\link{DPMech-class}}.
-#' @param oracle a source of random databases, returning: list of records given
-#'   desired length > 1; single record given length 1.
+#' @param oracle a source of random databases. A function returning: list,
+#'   matrix/data.frame (data in rows), numeric/character vector of records if
+#'   given desired length > 1; or single record given length 1, respectively
+#'   a list element, a row/named row,  a single numeric/character. Whichever
+#'   type is used should be expected by \code{object@target}.
 #' @param n database size scalar positive numeric, integer-valued.
 #' @param m sensitivity sample size scalar positive numeric, integer-valued.
 #' @param gamma RDP privacy confidence level.
@@ -192,11 +199,11 @@ setMethod("sensitivitySamplerManual",
 #'
 #' @examples
 #' ## Simple example with unbounded data hence no global sensitivity.
-#' f <- function(xs) mean(unlist(xs))
+#' f <- function(xs) mean(xs)
 #' m <- DPMechLaplace(target = f, dim = 1)
 #' m@sensitivity ## Inf
 #' m@gammaSensitivity ## NA as Laplace is naturally eps-DP
-#' P <- function(n) if (n > 1) as.list(rnorm(n)) else rnorm(1)
+#' P <- function(n) rnorm(n)
 #' m <- sensitivitySampler(m, oracle = P, n = 100, gamma = 0.33)
 #' m@sensitivity ## small like 0.03...
 #' m@gammaSensitivity ## 0.33 as directed, now m is (eps,gam)-DP.
@@ -215,8 +222,11 @@ setGeneric("sensitivitySampler",
 #' mechanism's \code{sensitivity}.
 #'
 #' @param object an object of class \code{\link{DPMech-class}}.
-#' @param oracle a source of random databases, returning: list of records given
-#'   desired length > 1; single record given length 1.
+#' @param oracle a source of random databases. A function returning: list,
+#'   matrix/data.frame (data in rows), numeric/character vector of records if
+#'   given desired length > 1; or single record given length 1, respectively
+#'   a list element, a row/named row,  a single numeric/character. Whichever
+#'   type is used should be expected by \code{object@target}.
 #' @param n database size scalar positive numeric, integer-valued.
 #' @param m sensitivity sample size scalar positive numeric, integer-valued.
 #' @param gamma RDP privacy confidence level.
@@ -229,11 +239,11 @@ setGeneric("sensitivitySampler",
 #'
 #' @examples
 #' ## Simple example with unbounded data hence no global sensitivity.
-#' f <- function(xs) mean(unlist(xs))
+#' f <- function(xs) mean(xs)
 #' m <- DPMechLaplace(target = f, dim = 1)
 #' m@sensitivity ## Inf
 #' m@gammaSensitivity ## NA as Laplace is naturally eps-DP
-#' P <- function(n) if (n > 1) as.list(rnorm(n)) else rnorm(1)
+#' P <- function(n) rnorm(n)
 #' m <- sensitivitySampler(m, oracle = P, n = 100, gamma = 0.33)
 #' m@sensitivity ## small like 0.03...
 #' m@gammaSensitivity ## 0.33 as directed, now m is (eps,gam)-DP.

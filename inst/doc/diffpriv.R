@@ -9,10 +9,10 @@ set.seed(53079239)
 
 ## ----genericLaplace, include=TRUE, echo=TRUE, results='markup'----
 library(diffpriv)
-f <- function(X) mean(unlist(X)) ## target function
+f <- function(X) mean(X) ## target function
 n <- 100 ## dataset size
 mechanism <- DPMechLaplace(target = f, sensitivity = 1/n, dim = 1)
-D <- as.list(runif(n, min = 0, max = 1)) ## the sensitive database in [0,1]^n
+D <- runif(n, min = 0, max = 1) ## the sensitive database in [0,1]^n
 pparams <- DPParamsEps(epsilon = 1) ## desired privacy budget
 r <- releaseResponse(mechanism, privacyParams = pparams, X = D)
 cat("Private response r$response:",   r$response,
@@ -20,12 +20,12 @@ cat("Private response r$response:",   r$response,
 
 ## ----samplerExponential, include=TRUE, echo=TRUE, results='markup'----
 library(randomNames)
-oracle <- function(n) if (n==1) randomNames(1) else as.list(randomNames(n))
-D <- list("Michael Jordan", "Andrew Ng", "Andrew Zisserman","Christopher Manning",
-          "Jitendra Malik", "Geoffrey Hinton", "Scott Shenker",
-          "Bernhard Scholkopf", "Jon Kleinberg", "Judea Pearl")
+oracle <- function(n) randomNames(n)
+D <- c("Michael Jordan", "Andrew Ng", "Andrew Zisserman","Christopher Manning",
+       "Jitendra Malik", "Geoffrey Hinton", "Scott Shenker",
+       "Bernhard Scholkopf", "Jon Kleinberg", "Judea Pearl")
 n <- length(D)
-f <- function(X) { function(r) sum(r == unlist(base::strsplit(unlist(X),""))) }
+f <- function(X) { function(r) sum(r == unlist(base::strsplit(X, ""))) }
 rSet <- as.list(letters) ## the response set, letters a--z
 mechanism <- DPMechExponential(target = f, responseSet = rSet)
 mechanism <- sensitivitySampler(mechanism, oracle = oracle, n = n, gamma = 0.1)

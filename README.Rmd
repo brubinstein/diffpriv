@@ -48,7 +48,7 @@ A typical example in differential privacy is privately releasing a simple
 
 ```{r example-1}
 ## a target function we'd like to run on private data X, releasing the result
-target <- function(X) mean(unlist(X))
+target <- function(X) mean(X)
 ```
 
 First load the `diffpriv` package (installed as above) and construct a 
@@ -71,7 +71,7 @@ generating the probe datasets.
 ## set a dataset sampling distribution, then estimate target sensitivity with
 ## sufficient samples for subsequent mechanism responses to achieve random
 ## differential privacy with confidence 1-gamma
-distr <- function(n) if (n==1) rnorm(1) else if (n>1) as.list(rnorm(n))
+distr <- function(n) rnorm(n)
 mech <- sensitivitySampler(mech, oracle = distr, n = 5, gamma = 0.1)
 mech@sensitivity
 ```

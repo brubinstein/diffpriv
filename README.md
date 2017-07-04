@@ -27,7 +27,7 @@ A typical example in differential privacy is privately releasing a simple `targe
 
 ``` r
 ## a target function we'd like to run on private data X, releasing the result
-target <- function(X) mean(unlist(X))
+target <- function(X) mean(X)
 ```
 
 First load the `diffpriv` package (installed as above) and construct a chosen differentially-private mechanism for privatizing `target`.
@@ -45,7 +45,7 @@ To run `mech` on some `X` we must first determine the sensitivity of `target` to
 ## set a dataset sampling distribution, then estimate target sensitivity with
 ## sufficient samples for subsequent mechanism responses to achieve random
 ## differential privacy with confidence 1-gamma
-distr <- function(n) if (n==1) rnorm(1) else if (n>1) as.list(rnorm(n))
+distr <- function(n) rnorm(n)
 mech <- sensitivitySampler(mech, oracle = distr, n = 5, gamma = 0.1)
 #> Sampling sensitivity with m=285 gamma=0.1 k=285
 mech@sensitivity
@@ -57,10 +57,14 @@ Finally we can produce private responses on an actual dataset `X`, displayed alo
 ``` r
 X <- list(0.328,-1.444,-0.511,0.154,-2.062) # length is sensitivitySampler() n
 r <- releaseResponse(mech, privacyParams = DPParamsEps(epsilon = 1), X = X)
+#> Warning in mean.default(X): argument is not numeric or logical: returning
+#> NA
 cat("Private response r$response:   ",   r$response,
     "\nNon-private response target(X):", target(X))
-#> Private response r$response:    -1.14449 
-#> Non-private response target(X): -0.707
+#> Warning in mean.default(X): argument is not numeric or logical: returning
+#> NA
+#> Private response r$response:    NA 
+#> Non-private response target(X): NA
 ```
 
 Getting Started
