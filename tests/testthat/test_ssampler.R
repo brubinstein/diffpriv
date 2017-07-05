@@ -20,6 +20,12 @@ test_that("sensitivitySampler methods check types", {
     "k is not in", ignore.case=TRUE)
   expect_error(.sensitivity_sampler_config(), "specify at least one",
     ignore.case = TRUE)
+  expect_error(.sensitivity_sampler_config(m = 1.1), "m is not",
+    ignore.case = TRUE)
+  expect_error(.sensitivity_sampler_config(gamma = 1.1), "gamma is not",
+    ignore.case = TRUE)
+  expect_error(.sensitivity_sampler_config(gamma = 0.0001, m = 100),
+    "must exceed", ignore.case = TRUE)
 })
 
 test_that("sensitivitySampler() returns expected responses", {
