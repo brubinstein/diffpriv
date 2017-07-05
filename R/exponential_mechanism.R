@@ -10,6 +10,7 @@ NULL
 #' computed sampling distributions from a uniform base measure.
 #'
 #' @slot sensitivity non-negative scalar numeric quality function sensitivity.
+#'   Defaults to \code{Inf} for use with \code{sensitivitySampler()}.
 #' @slot target the quality score function mapping dataset to a function on
 #'   responses (elements of \code{responseSet}).
 #' @slot gammaSensitivity \code{NA_real_} if deactive, or scalar in [0,1)

@@ -12,8 +12,11 @@
 \arguments{
 \item{object}{an object of class \code{\link{DPMech-class}}.}
 
-\item{oracle}{a source of random databases, returning: list of records given
-desired length > 1; single record given length 1.}
+\item{oracle}{a source of random databases. A function returning: list,
+matrix/data.frame (data in rows), numeric/character vector of records if
+given desired length > 1; or single record given length 1, respectively
+a list element, a row/named row,  a single numeric/character. Whichever
+type is used should be expected by \code{object@target}.}
 
 \item{n}{database size scalar positive numeric, integer-valued.}
 
@@ -35,9 +38,9 @@ does not properly set the \code{gammaSensitivity} slot of
 }
 \examples{
 ## Simple example with unbounded data hence no global sensitivity.
-f <- function(xs) mean(unlist(xs))
+f <- function(xs) mean(xs)
 m <- DPMechLaplace(target = f, dim = 1)
-P <- function(n) if (n > 1) as.list(rnorm(n)) else rnorm(1)
+P <- function(n) rnorm(n)
 m <- sensitivitySamplerManual(m, oracle = P, n = 100, m = 10, k = 10)
 m@sensitivity
 

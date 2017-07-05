@@ -12,9 +12,11 @@ be subclassed.
 \section{Slots}{
 
 \describe{
-\item{\code{sensitivity}}{non-negative scalar numeric target sensitivity.}
+\item{\code{sensitivity}}{non-negative scalar numeric target sensitivity. Defaults
+to \code{Inf} for use with \code{sensitivitySampler()}.}
 
-\item{\code{target}}{the target non-private function to be privatized, takes lists.}
+\item{\code{target}}{the target non-private function to be privatized, takes lists.
+Defaults to a constant function.}
 
 \item{\code{gammaSensitivity}}{\code{NA_real_} if deactive, or scalar in [0,1)
 indicating that responses must be RDP with specific confidence.}

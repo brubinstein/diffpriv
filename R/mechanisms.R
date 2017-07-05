@@ -7,8 +7,10 @@ NULL
 #' privacy. As this class is \code{VIRTUAL} it cannot be instantiated, but it can
 #' be subclassed.
 #'
-#' @slot sensitivity non-negative scalar numeric target sensitivity.
+#' @slot sensitivity non-negative scalar numeric target sensitivity. Defaults
+#'   to \code{Inf} for use with \code{sensitivitySampler()}.
 #' @slot target the target non-private function to be privatized, takes lists.
+#'   Defaults to a constant function.
 #' @slot gammaSensitivity \code{NA_real_} if deactive, or scalar in [0,1)
 #'   indicating that responses must be RDP with specific confidence.
 #'

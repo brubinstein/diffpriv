@@ -52,14 +52,19 @@ for privatizing numeric vector releases.
 \section{Slots}{
 
 \describe{
-\item{\code{sensitivity}}{non-negative scalar numeric target sensitivity.}
+\item{\code{sensitivity}}{non-negative scalar numeric target sensitivity. Defaults
+to \code{Inf} for use with \code{sensitivitySampler()}.}
 
-\item{\code{target}}{the target non-private function to be privatized.}
+\item{\code{target}}{the target non-private function to be privatized, takes lists.
+Defaults to a constant function. Laplace mechanism assumes functions that
+release numeric vectors of fixed dimension \code{dim}.}
 
 \item{\code{gammaSensitivity}}{\code{NA_real_} if deactive, or scalar in [0,1)
 indicating that responses must be RDP with specific confidence.}
 
-\item{\code{dim}}{positive scalar numeric dimension of responses.}
+\item{\code{dim}}{positive scalar numeric dimension of responses. Defaults to
+\code{NA_integer_} for use with \code{sensitivitySampler()} which can
+probe \code{target} to determine dimension.}
 }}
 
 \examples{

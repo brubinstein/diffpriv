@@ -6,11 +6,16 @@ NULL
 #' A class that implements the basic Laplace mechanism of differential privacy,
 #' for privatizing numeric vector releases.
 #'
-#' @slot sensitivity non-negative scalar numeric target sensitivity.
-#' @slot target the target non-private function to be privatized.
+#' @slot sensitivity non-negative scalar numeric target sensitivity. Defaults
+#'   to \code{Inf} for use with \code{sensitivitySampler()}.
+#' @slot target the target non-private function to be privatized, takes lists.
+#'   Defaults to a constant function. Laplace mechanism assumes functions that
+#'   release numeric vectors of fixed dimension \code{dim}.
 #' @slot gammaSensitivity \code{NA_real_} if deactive, or scalar in [0,1)
 #'   indicating that responses must be RDP with specific confidence.
-#' @slot dim positive scalar numeric dimension of responses.
+#' @slot dim positive scalar numeric dimension of responses. Defaults to
+#'   \code{NA_integer_} for use with \code{sensitivitySampler()} which can
+#'   probe \code{target} to determine dimension.
 #'
 #' @references Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith.
 #'   "Calibrating noise to sensitivity in private data analysis." In Theory of
@@ -20,12 +25,13 @@ NULL
 #' @exportClass DPMechLaplace
 DPMechLaplace <- setClass("DPMechLaplace",
   contains = "DPMech",
-  slots = list(dim = "numeric")
+  slots = list(dim = "numeric"),
+  prototype = prototype(dim = NA_integer_)
 )
 
 ## A \code{DPMechLaplace} should be constructed with an appropriate dimension.
 setValidity("DPMechLaplace", function(object) {
-  if (!.check_integer(object@dim)) {
+  if (!is.na(object@dim) && !.check_integer(object@dim)) {
     return("DPMechLaplace@dim should be a scalar natural number.")
   }
   return(TRUE)
@@ -69,6 +75,9 @@ setMethod("releaseResponse",
     rawR <- mechanism@target(X)
     if (!is.numeric(rawR)) {
       stop("Non-private target output non-numeric.")
+    }
+    if (is.na(mechanism@dim)) {
+      warning("No expected non-private dim slot set.")
     }
     if (length(rawR) != mechanism@dim) {
       warning("Non-private target output has unexpected dimension.")
@@ -114,8 +123,12 @@ setMethod("sensitivityNorm",
     if (!is.numeric(rawR1) || !is.numeric(rawR2)) {
       stop("Non-private target output non-numeric.")
     }
-    if (length(rawR1) != mechanism@dim || length(rawR2) != mechanism@dim) {
-      warning("Non-private target output has unexpected dimension.")
+    if (is.na(mechanism@dim)) {
+      warning("No expected dimension set.")
+    } else {
+      if (length(rawR1) != mechanism@dim || length(rawR2) != mechanism@dim) {
+        warning("Non-private target output has unexpected dimension.")
+      }
     }
     if (length(rawR1) != length(rawR2)) {
       stop("Non-private target output dimensions inconsistent.")

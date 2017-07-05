@@ -65,3 +65,10 @@ test_that("Responses post sensitivitySampler() are RDP", {
   R <- releaseResponse(m, DPParamsEps(epsilon = epsilon), rnorm(n))
   expect_is(R$privacyParams, "DPParamsGam")
 })
+
+test_that("sensitivitySampler() determines DPMechLaplace@dim", {
+  m <- DPMechLaplace(target = function(xs) apply(xs, 2, mean))
+  P <- function(n) matrix(rnorm(3*n), ncol=3)
+  m <- sensitivitySampler(m, oracle = P, n = 10, gamma = 0.33)
+  expect_equal(m@dim, 3)
+})

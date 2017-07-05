@@ -268,3 +268,68 @@ setMethod("sensitivitySampler",
       k = ssconfig$k))
   }
 )
+
+#' Sensitivity sampler for \code{\link{DPMechLaplace-class}}.
+#'
+#' Given a constructed \code{\link{DPMechLaplace-class}}, complete with
+#' \code{target} function and \code{sensitivityNorm,} and an \code{oracle} for
+#' producing records, samples the sensitivity of the target function to set the
+#' mechanism's \code{sensitivity}. Typically the method
+#' \code{\link{sensitivitySampler}} should be used instead; NOTE this method
+#' does not properly set the \code{gammaSensitivity} slot of
+#' \code{\link{DPMech-class}} unlike the preferred method. This method can
+#' probe \code{target} to determine response dimension when the
+#' corresponding \code{object@dim} is \code{NA}.
+#'
+#' @param object an object of class \code{\link{DPMechLaplace-class}}.
+#' @param oracle a source of random databases. A function returning: list,
+#'   matrix/data.frame (data in rows), numeric/character vector of records if
+#'   given desired length > 1; or single record given length 1, respectively
+#'   a list element, a row/named row,  a single numeric/character. Whichever
+#'   type is used should be expected by \code{object@target}.
+#' @param n database size scalar positive numeric, integer-valued.
+#' @param m sensitivity sample size scalar positive numeric, integer-valued.
+#' @param k order statistic index in {1,...,\code{m}}.
+#' @return \code{object} with updated sensitivity parameter, and (potentially)
+#'   \code{dim}.
+#'
+#' @references
+#' Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential
+#'   Privacy with Sensitivity Sampling", accepted into the 34th International
+#'   Conference on Machine Learning (ICML'2017), May 2017.
+#'
+#' @examples
+#' ## Simple example with unbounded data hence no global sensitivity.
+#' f <- function(xs) mean(xs)
+#' m <- DPMechLaplace(target = f, dim = 1)
+#' P <- function(n) rnorm(n)
+#' m <- sensitivitySamplerManual(m, oracle = P, n = 100, m = 10, k = 10)
+#' m@sensitivity
+#'
+#' @seealso \code{\link{sensitivitySampler}} preferred method for sensitivity
+#'   sampling.
+#'
+#' @export
+setMethod("sensitivitySamplerManual",
+  signature(object = "DPMechLaplace",
+            oracle = "function",
+            n = "numeric",
+            m = "numeric",
+            k = "numeric"),
+  function(object, oracle, n, m, k) {
+    if (!.check_integer(n) || n < 1)
+      stop("Given database size n is not positive scalar integer-valued.")
+    if (!.check_integer(m) || m < 1)
+      stop("Given sample size m is not positive scalar integer-valued.")
+    if (!.check_integer(k))
+      stop("Given order statistic index k is not scalar integer-valued.")
+    if (k <= 0 || k > m)
+      stop("Given order statistic index k is not in {1,...,m}.")
+    if (is.na(object@dim)) {
+      db <- oracle(n)
+      R <- object@target(db)
+      object@dim <- length(R)
+    }
+    return(callNextMethod(object=object, oracle=oracle, n=n, m=m, k=k))
+  }
+)

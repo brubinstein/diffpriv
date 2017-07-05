@@ -55,7 +55,8 @@ computed sampling distributions from a uniform base measure.
 \section{Slots}{
 
 \describe{
-\item{\code{sensitivity}}{non-negative scalar numeric quality function sensitivity.}
+\item{\code{sensitivity}}{non-negative scalar numeric quality function sensitivity.
+Defaults to \code{Inf} for use with \code{sensitivitySampler()}.}
 
 \item{\code{target}}{the quality score function mapping dataset to a function on
 responses (elements of \code{responseSet}).}
