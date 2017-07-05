@@ -26,11 +26,12 @@ Suggests:
     randomNames,
     testthat,
     knitr
-Collate:
+Collate: 
     'diffpriv.R'
     'utils.R'
     'privacy_params.R'
     'mechanisms.R'
     'exponential_mechanism.R'
+    'gaussian_mechanism.R'
     'laplace_mechanism.R'
     'sensitivity_sampler.R'

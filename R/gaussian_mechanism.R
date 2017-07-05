@@ -1,15 +1,15 @@
 #' @include mechanisms.R privacy_params.R utils.R
 NULL
 
-#' An S4 class for the Laplace mechanism of differential privacy.
+#' An S4 class for the Gaussian mechanism of differential privacy.
 #'
-#' A class that implements the basic Laplace mechanism of differential privacy,
+#' A class that implements the Gaussian mechanism of differential privacy,
 #' for privatizing numeric vector releases.
 #'
-#' @slot sensitivity non-negative scalar numeric L1 target sensitivity.
+#' @slot sensitivity non-negative scalar numeric L2 target sensitivity.
 #'   Defaults to \code{Inf} for use with \code{sensitivitySampler()}.
 #' @slot target the target non-private function to be privatized, takes lists.
-#'   Defaults to a constant function. Laplace mechanism assumes functions that
+#'   Defaults to a constant function. Gaussian mechanism assumes functions that
 #'   release numeric vectors of fixed dimension \code{dim}.
 #' @slot gammaSensitivity \code{NA_real_} if deactive, or scalar in [0,1)
 #'   indicating that responses must be RDP with specific confidence.
@@ -17,30 +17,30 @@ NULL
 #'   \code{NA_integer_} for use with \code{sensitivitySampler()} which can
 #'   probe \code{target} to determine dimension.
 #'
-#' @references Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith.
-#'   "Calibrating noise to sensitivity in private data analysis." In Theory of
-#'   Cryptography Conference, pp. 265-284. Springer Berlin Heidelberg, 2006.
+#' @references Cynthia Dwork and Aaron Roth. "Algorithmic Foundations of
+#' Differential Privacy" Foundations and Trends in Theoretical Computer
+#' Science. Now Publishers, 2014.
 #'
-#' @export DPMechLaplace
-#' @exportClass DPMechLaplace
-DPMechLaplace <- setClass("DPMechLaplace",
+#' @export DPMechGaussian
+#' @exportClass DPMechGaussian
+DPMechGaussian <- setClass("DPMechGaussian",
   contains = "DPMech",
   slots = list(dim = "numeric"),
   prototype = prototype(dim = NA_integer_)
 )
 
-## A \code{DPMechLaplace} should be constructed with an appropriate dimension.
-setValidity("DPMechLaplace", function(object) {
+## A \code{DPMechGaussian} should be constructed with an appropriate dimension.
+setValidity("DPMechGaussian", function(object) {
   if (!is.na(object@dim) && !.check_integer(object@dim)) {
-    return("DPMechLaplace@dim should be a scalar natural number.")
+    return("DPMechGaussian@dim should be a scalar natural number.")
   }
   return(TRUE)
 })
 
-#' @describeIn DPMechLaplace automatically prints the object.
+#' @describeIn DPMechGaussian automatically prints the object.
 #' @param object an instance of class \code{DPMech}.
-setMethod("show", "DPMechLaplace", function(object) {
-  cat("Laplace mechanism\n")
+setMethod("show", "DPMechGaussian", function(object) {
+  cat("Gaussian mechanism\n")
   cat("Sensitivity:", object@sensitivity, "\n")
   if (is.na(object@gammaSensitivity)) {
     cat("Sampled sensitivity gamma: NA\n")
@@ -52,25 +52,25 @@ setMethod("show", "DPMechLaplace", function(object) {
   show(object@target)
 })
 
-#' @describeIn DPMechLaplace releases Laplace mechanism responses.
-#' @param mechanism an object of class \code{\link{DPMechLaplace}}.
-#' @param privacyParams an object of class \code{\link{DPParamsEps}}.
+#' @describeIn DPMechGaussian releases Gaussian mechanism responses.
+#' @param mechanism an object of class \code{\link{DPMechGaussian}}.
+#' @param privacyParams an object of class \code{\link{DPParamsDel}}.
 #' @param X a privacy-sensitive dataset, if using sensitivity sampler a: list,
 #'   matrix, data frame, numeric/character vector.
-#' @return list with slots per argument, actual privacy parameter; Laplace
+#' @return list with slots per argument, actual privacy parameter; Gaussian
 #'   mechanism response with length of target release:
 #'   \code{privacyParams, sensitivity, dim, target, response}.
 #' @examples
 #' f <- function(xs) mean(xs)
 #' n <- 100
-#' m <- DPMechLaplace(sensitivity = 1/n, target = f, dim = 1)
+#' m <- DPMechGaussian(sensitivity = 1/n, target = f, dim = 1)
 #' X <- runif(n)
-#' p <- DPParamsEps(epsilon = 1)
+#' p <- DPParamsDel(epsilon = 1, delta = 0.1)
 #' releaseResponse(m, p, X)
 #' @export
 setMethod("releaseResponse",
-  signature(mechanism = "DPMechLaplace",
-            privacyParams = "DPParamsEps",
+  signature(mechanism = "DPMechGaussian",
+            privacyParams = "DPParamsDel",
             X = "ANY"),
   function(mechanism, privacyParams, X) {
     rawR <- mechanism@target(X)
@@ -83,9 +83,9 @@ setMethod("releaseResponse",
     if (length(rawR) != mechanism@dim) {
       warning("Non-private target output has unexpected dimension.")
     }
-    noise <- .rlap(length(rawR),
-                   location = 0,
-                   scale = mechanism@sensitivity / privacyParams@epsilon)
+    C <- sqrt(2 * log(1.25 / privacyParams@delta))
+    noise <- stats::rnorm(length(rawR), mean = 0,
+      sd = mechanism@sensitivity * C / privacyParams@epsilon)
     R <- rawR + noise
     if (is.na(mechanism@gammaSensitivity)) {
       p <- privacyParams
@@ -102,20 +102,20 @@ setMethod("releaseResponse",
   }
 )
 
-#' @describeIn DPMechLaplace measures sensitivity of non-private \code{target}.
+#' @describeIn DPMechGaussian measures sensitivity of non-private \code{target}.
 #' @param X1 a privacy-sensitive dataset, list if sensitivity sampler compatible.
 #' @param X2 a privacy-sensitive dataset, list if sensitivity sampler compatible.
 #' @return scalar numeric norm of non-private \code{target} on datasets.
 #' @examples
 #' f <- function(xs) mean(xs)
 #' n <- 100
-#' m <- DPMechLaplace(sensitivity = 1/n, target = f, dim = 1)
+#' m <- DPMechGaussian(sensitivity = 1/n, target = f, dim = 1)
 #' X1 <- runif(n)
 #' X2 <- runif(n)
 #' sensitivityNorm(m, X1, X2)
 #' @export
 setMethod("sensitivityNorm",
-  signature(mechanism = "DPMechLaplace",
+  signature(mechanism = "DPMechGaussian",
             X1 = "ANY",
             X2 = "ANY"),
   function(mechanism, X1, X2) {
@@ -137,6 +137,6 @@ setMethod("sensitivityNorm",
     if (length(rawR1) == 0) {
       return(0)
     }
-    return(.l1norm(rawR1 - rawR2))
+    return(.l2norm(rawR1 - rawR2))
   }
 )

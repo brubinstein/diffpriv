@@ -80,6 +80,27 @@
   return(sum(abs(xs)))
 }
 
+#' The L2 norm.
+#'
+#' L2 norm of a numeric vector.
+#'
+#' Returns \code{0} for \code{xs} of length zero; otherwise the square root of
+#'   sum of squares.
+#'
+#' @param xs a numeric vector.
+#' @return The L2 norm of \code{xs}.
+#'
+#' @examples
+#' xs <- c(-2.5, 1, 2)
+#' .l2norm(xs)    # 3.35
+.l2norm <- function(xs) {
+  if (!is.numeric(xs))
+    stop("Given object is not numeric.")
+  if (length(xs) == 0)
+    return(0)
+  return(sqrt(sum(xs^2)))
+}
+
 #' The L_Infty norm.
 #'
 #' L_Infty norm of a numeric vector.
