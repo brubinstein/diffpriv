@@ -29,7 +29,7 @@ NULL
 #' @examples
 #' ## Simple example with unbounded data hence no global sensitivity.
 #' f <- function(xs) mean(xs)
-#' m <- DPMechLaplace(target = f, dim = 1)
+#' m <- DPMechLaplace(target = f, dims = 1)
 #' P <- function(n) rnorm(n)
 #' m <- sensitivitySamplerManual(m, oracle = P, n = 100, m = 10, k = 10)
 #' m@sensitivity
@@ -72,7 +72,7 @@ setGeneric("sensitivitySamplerManual",
 #' @examples
 #' ## Simple example with unbounded data hence no global sensitivity.
 #' f <- function(xs) mean(xs)
-#' m <- DPMechLaplace(target = f, dim = 1)
+#' m <- DPMechLaplace(target = f, dims = 1)
 #' P <- function(n) rnorm(n)
 #' m <- sensitivitySamplerManual(m, oracle = P, n = 100, m = 10, k = 10)
 #' m@sensitivity
@@ -200,7 +200,7 @@ setMethod("sensitivitySamplerManual",
 #' @examples
 #' ## Simple example with unbounded data hence no global sensitivity.
 #' f <- function(xs) mean(xs)
-#' m <- DPMechLaplace(target = f, dim = 1)
+#' m <- DPMechLaplace(target = f, dims = 1)
 #' m@sensitivity ## Inf
 #' m@gammaSensitivity ## NA as Laplace is naturally eps-DP
 #' P <- function(n) rnorm(n)
@@ -240,7 +240,7 @@ setGeneric("sensitivitySampler",
 #' @examples
 #' ## Simple example with unbounded data hence no global sensitivity.
 #' f <- function(xs) mean(xs)
-#' m <- DPMechLaplace(target = f, dim = 1)
+#' m <- DPMechLaplace(target = f, dims = 1)
 #' m@sensitivity ## Inf
 #' m@gammaSensitivity ## NA as Laplace is naturally eps-DP
 #' P <- function(n) rnorm(n)
@@ -279,7 +279,7 @@ setMethod("sensitivitySampler",
 #' does not properly set the \code{gammaSensitivity} slot of
 #' \code{\link{DPMech-class}} unlike the preferred method. This method can
 #' probe \code{target} to determine response dimension when the
-#' corresponding \code{object@dim} is \code{NA}.
+#' corresponding \code{object@dims} is \code{NA}.
 #'
 #' @param object an object of class \code{\link{DPMechLaplace-class}}.
 #' @param oracle a source of random databases. A function returning: list,
@@ -291,7 +291,7 @@ setMethod("sensitivitySampler",
 #' @param m sensitivity sample size scalar positive numeric, integer-valued.
 #' @param k order statistic index in {1,...,\code{m}}.
 #' @return \code{object} with updated sensitivity parameter, and (potentially)
-#'   \code{dim}.
+#'   \code{dims}.
 #'
 #' @references
 #' Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential
@@ -301,7 +301,7 @@ setMethod("sensitivitySampler",
 #' @examples
 #' ## Simple example with unbounded data hence no global sensitivity.
 #' f <- function(xs) mean(xs)
-#' m <- DPMechLaplace(target = f, dim = 1)
+#' m <- DPMechLaplace(target = f, dims = 1)
 #' P <- function(n) rnorm(n)
 #' m <- sensitivitySamplerManual(m, oracle = P, n = 100, m = 10, k = 10)
 #' m@sensitivity
@@ -325,10 +325,10 @@ setMethod("sensitivitySamplerManual",
       stop("Given order statistic index k is not scalar integer-valued.")
     if (k <= 0 || k > m)
       stop("Given order statistic index k is not in {1,...,m}.")
-    if (is.na(object@dim)) {
+    if (is.na(object@dims)) {
       db <- oracle(n)
       R <- object@target(db)
-      object@dim <- length(R)
+      object@dims <- length(R)
     }
     return(callNextMethod(object=object, oracle=oracle, n=n, m=m, k=k))
   }

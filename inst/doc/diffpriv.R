@@ -11,7 +11,7 @@ set.seed(53079239)
 library(diffpriv)
 f <- function(X) mean(X) ## target function
 n <- 100 ## dataset size
-mechanism <- DPMechLaplace(target = f, sensitivity = 1/n, dim = 1)
+mechanism <- DPMechLaplace(target = f, sensitivity = 1/n, dims = 1)
 D <- runif(n, min = 0, max = 1) ## the sensitive database in [0,1]^n
 pparams <- DPParamsEps(epsilon = 1) ## desired privacy budget
 r <- releaseResponse(mechanism, privacyParams = pparams, X = D)

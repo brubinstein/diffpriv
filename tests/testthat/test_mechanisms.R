@@ -8,18 +8,18 @@ test_that("DPMech show() runs without error", {
   expect_output(show(m), "exponential mechanism", ignore.case = TRUE)
   m@gammaSensitivity <- 0.2
   expect_output(show(m), "exponential mechanism", ignore.case = TRUE)
-  m <- DPMechLaplace(target = function(xs) c(1, 2), sensitivity = 1, dim = 2)
+  m <- DPMechLaplace(target = function(xs) c(1, 2), sensitivity = 1, dims = 2)
   expect_output(show(m), "laplace mechanism", ignore.case = TRUE)
   m@gammaSensitivity <- 0.2
   expect_output(show(m), "laplace mechanism", ignore.case = TRUE)
 })
 
 test_that("DPMechLaplace response dimension", {
-  m_no <- DPMechLaplace(target = function(xs) 1, sensitivity = 1, dim = 2)
-  m_ok <- DPMechLaplace(target = function(xs) c(1, 2), sensitivity = 1, dim = 2)
+  m_no <- DPMechLaplace(target = function(xs) 1, sensitivity = 1, dims = 2)
+  m_ok <- DPMechLaplace(target = function(xs) c(1, 2), sensitivity = 1, dims=2)
   m_df <- DPMechLaplace(target = function(xs) 1)
   m_ey <- DPMechLaplace(target = function(xs) numeric())
-  m_ey@dim <- 0
+  m_ey@dims <- 0
   p <- DPParamsEps()
   expect_warning(releaseResponse(m_no, privacyParams = p, X = 1:2),
     "Non-private target output has unexpected dimension.", ignore.case = TRUE)
@@ -34,12 +34,12 @@ test_that("DPMechLaplace response dimension", {
 
 test_that("DPMechLaplace checks are comprehensive", {
   p <- DPParamsEps(epsilon = 1)
-  m <- DPMechLaplace(target = function(xs) "a", sensitivity = 1, dim = 1)
+  m <- DPMechLaplace(target = function(xs) "a", sensitivity = 1, dims = 1)
   expect_error(releaseResponse(m, privacyParams = p, X = 1:3), "numeric",
     ignore.case = TRUE)
   expect_error(sensitivityNorm(m, X1 = 1:2, X2 = 1:2), "numeric",
     ignore.case = TRUE)
-  m <- DPMechLaplace(target = function(xs) 1, sensitivity = 1, dim = 2)
+  m <- DPMechLaplace(target = function(xs) 1, sensitivity = 1, dims = 2)
   expect_warning(sensitivityNorm(m, X1 = 1:2, X2 = 1:2), "dimension",
     ignore.case = TRUE)
 })

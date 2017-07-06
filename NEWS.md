@@ -1,3 +1,9 @@
+# diffpriv 0.3.0
+
+* New `DPMechGaussian` class implementing the Gaussian mechanism, which achieves (epsilon,delta)-differential privacy by adding Gaussian noise to numeric responses calibrated by L2-norm sensitivity.
+
+* Refactoring of `DPMechGaussian` and `DPMechLaplace` underneath a new `VIRTUAL` class `DPMechNumeric` which contains common methods, `dims` slot (formerly `dim` changed because `dim` is a special slot for S4).
+
 # diffpriv 0.2.0
 
 * `DPMechLaplace` objects can now be initialized without specifying non-private `target` response `dim`. In such cases, the sensitivity sampler will perform an additional `target` probe to determine `dim`.

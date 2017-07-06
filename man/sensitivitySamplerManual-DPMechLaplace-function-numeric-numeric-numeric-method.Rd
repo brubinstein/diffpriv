@@ -26,7 +26,7 @@ type is used should be expected by \code{object@target}.}
 }
 \value{
 \code{object} with updated sensitivity parameter, and (potentially)
-  \code{dim}.
+  \code{dims}.
 }
 \description{
 Given a constructed \code{\link{DPMechLaplace-class}}, complete with
@@ -37,12 +37,12 @@ mechanism's \code{sensitivity}. Typically the method
 does not properly set the \code{gammaSensitivity} slot of
 \code{\link{DPMech-class}} unlike the preferred method. This method can
 probe \code{target} to determine response dimension when the
-corresponding \code{object@dim} is \code{NA}.
+corresponding \code{object@dims} is \code{NA}.
 }
 \examples{
 ## Simple example with unbounded data hence no global sensitivity.
 f <- function(xs) mean(xs)
-m <- DPMechLaplace(target = f, dim = 1)
+m <- DPMechLaplace(target = f, dims = 1)
 P <- function(n) rnorm(n)
 m <- sensitivitySamplerManual(m, oracle = P, n = 100, m = 10, k = 10)
 m@sensitivity

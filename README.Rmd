@@ -55,10 +55,10 @@ First load the `diffpriv` package (installed as above) and construct a
 chosen differentially-private mechanism for privatizing `target`.
 
 ```{r example-2}
-## target seeks to release a scalar numeric, so we'll use the Laplace 
+## target seeks to release a numeric, so we'll use the Laplace 
 ## mechanism--a standard generic mechanism for numeric responses
 library(diffpriv)
-mech <- DPMechLaplace(target = target, dim = 1)
+mech <- DPMechLaplace(target = target)
 ```
 
 To run `mech` on some `X` we must first determine the sensitivity of `target` 

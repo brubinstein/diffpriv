@@ -33,10 +33,10 @@ target <- function(X) mean(X)
 First load the `diffpriv` package (installed as above) and construct a chosen differentially-private mechanism for privatizing `target`.
 
 ``` r
-## target seeks to release a scalar numeric, so we'll use the Laplace 
+## target seeks to release a numeric, so we'll use the Laplace 
 ## mechanism--a standard generic mechanism for numeric responses
 library(diffpriv)
-mech <- DPMechLaplace(target = target, dim = 1)
+mech <- DPMechLaplace(target = target)
 ```
 
 To run `mech` on some `X` we must first determine the sensitivity of `target` to small changes to input dataset. We could either assume bounded data then do the math, or we could use sensitivity sampling: repeated probing of `target` to estimate sensitivity automatically. We must specify a distribution `distr` for generating the probe datasets.
@@ -49,7 +49,7 @@ distr <- function(n) rnorm(n)
 mech <- sensitivitySampler(mech, oracle = distr, n = 5, gamma = 0.1)
 #> Sampling sensitivity with m=285 gamma=0.1 k=285
 mech@sensitivity
-#> [1] 0.7926077
+#> [1] 0.7366379
 ```
 
 Finally we can produce private responses on an actual dataset `X`, displayed alongside the non-private response for comparison:

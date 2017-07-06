@@ -1,7 +1,7 @@
 Package: diffpriv
 Type: Package
 Title: Generic Mechanisms for Differential Privacy
-Version: 0.2.0
+Version: 0.3.0
 Date: 2017-06-13
 Authors@R: c(
     person(c("Benjamin", "I.", "P."), "Rubinstein", email = "brubinstein@unimelb.edu.au", role = c("aut", "cre")),
@@ -32,6 +32,7 @@ Collate:
     'privacy_params.R'
     'mechanisms.R'
     'exponential_mechanism.R'
+    'numeric_mechanism.R'
     'gaussian_mechanism.R'
     'laplace_mechanism.R'
     'sensitivity_sampler.R'

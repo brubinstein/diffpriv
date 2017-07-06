@@ -33,7 +33,7 @@ mechanism's \code{sensitivity}.
 \examples{
 ## Simple example with unbounded data hence no global sensitivity.
 f <- function(xs) mean(xs)
-m <- DPMechLaplace(target = f, dim = 1)
+m <- DPMechLaplace(target = f, dims = 1)
 m@sensitivity ## Inf
 m@gammaSensitivity ## NA as Laplace is naturally eps-DP
 P <- function(n) rnorm(n)

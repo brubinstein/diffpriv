@@ -6,15 +6,12 @@
 \alias{DPMechGaussian}
 \alias{show,DPMechGaussian-method}
 \alias{releaseResponse,DPMechGaussian,DPParamsDel-method}
-\alias{sensitivityNorm,DPMechGaussian-method}
 \title{An S4 class for the Gaussian mechanism of differential privacy.}
 \usage{
 \S4method{show}{DPMechGaussian}(object)
 
 \S4method{releaseResponse}{DPMechGaussian,DPParamsDel}(mechanism, privacyParams,
   X)
-
-\S4method{sensitivityNorm}{DPMechGaussian}(mechanism, X1, X2)
 }
 \arguments{
 \item{object}{an instance of class \code{DPMech}.}
@@ -25,17 +22,11 @@
 
 \item{X}{a privacy-sensitive dataset, if using sensitivity sampler a: list,
 matrix, data frame, numeric/character vector.}
-
-\item{X1}{a privacy-sensitive dataset, list if sensitivity sampler compatible.}
-
-\item{X2}{a privacy-sensitive dataset, list if sensitivity sampler compatible.}
 }
 \value{
 list with slots per argument, actual privacy parameter; Gaussian
   mechanism response with length of target release:
-  \code{privacyParams, sensitivity, dim, target, response}.
-
-scalar numeric norm of non-private \code{target} on datasets.
+  \code{privacyParams, sensitivity, dims, target, response}.
 }
 \description{
 A class that implements the Gaussian mechanism of differential privacy,
@@ -46,8 +37,6 @@ for privatizing numeric vector releases.
 \item \code{show}: automatically prints the object.
 
 \item \code{releaseResponse}: releases Gaussian mechanism responses.
-
-\item \code{sensitivityNorm}: measures sensitivity of non-private \code{target}.
 }}
 
 \section{Slots}{
@@ -58,12 +47,12 @@ Defaults to \code{Inf} for use with \code{sensitivitySampler()}.}
 
 \item{\code{target}}{the target non-private function to be privatized, takes lists.
 Defaults to a constant function. Gaussian mechanism assumes functions that
-release numeric vectors of fixed dimension \code{dim}.}
+release numeric vectors of fixed dimension \code{dims}.}
 
 \item{\code{gammaSensitivity}}{\code{NA_real_} if deactive, or scalar in [0,1)
 indicating that responses must be RDP with specific confidence.}
 
-\item{\code{dim}}{positive scalar numeric dimension of responses. Defaults to
+\item{\code{dims}}{positive scalar numeric dimension of responses. Defaults to
 \code{NA_integer_} for use with \code{sensitivitySampler()} which can
 probe \code{target} to determine dimension.}
 }}
@@ -71,16 +60,10 @@ probe \code{target} to determine dimension.}
 \examples{
 f <- function(xs) mean(xs)
 n <- 100
-m <- DPMechGaussian(sensitivity = 1/n, target = f, dim = 1)
+m <- DPMechGaussian(sensitivity = 1/n, target = f, dims = 1)
 X <- runif(n)
 p <- DPParamsDel(epsilon = 1, delta = 0.1)
 releaseResponse(m, p, X)
-f <- function(xs) mean(xs)
-n <- 100
-m <- DPMechGaussian(sensitivity = 1/n, target = f, dim = 1)
-X1 <- runif(n)
-X2 <- runif(n)
-sensitivityNorm(m, X1, X2)
 }
 \references{
 Cynthia Dwork and Aaron Roth. "Algorithmic Foundations of
