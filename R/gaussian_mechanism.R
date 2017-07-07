@@ -34,56 +34,6 @@ setMethod("show", "DPMechGaussian", function(object) {
   callNextMethod()
 })
 
-#' @describeIn DPMechGaussian releases Gaussian mechanism responses.
-#' @param mechanism an object of class \code{\link{DPMechGaussian}}.
-#' @param privacyParams an object of class \code{\link{DPParamsDel}}.
-#' @param X a privacy-sensitive dataset, if using sensitivity sampler a: list,
-#'   matrix, data frame, numeric/character vector.
-#' @return list with slots per argument, actual privacy parameter; Gaussian
-#'   mechanism response with length of target release:
-#'   \code{privacyParams, sensitivity, dims, target, response}.
-#' @examples
-#' f <- function(xs) mean(xs)
-#' n <- 100
-#' m <- DPMechGaussian(sensitivity = 1/n, target = f, dims = 1)
-#' X <- runif(n)
-#' p <- DPParamsDel(epsilon = 1, delta = 0.1)
-#' releaseResponse(m, p, X)
-#' @export
-setMethod("releaseResponse",
-  signature(mechanism = "DPMechGaussian",
-            privacyParams = "DPParamsDel",
-            X = "ANY"),
-  function(mechanism, privacyParams, X) {
-    rawR <- mechanism@target(X)
-    if (!is.numeric(rawR)) {
-      stop("Non-private target output non-numeric.")
-    }
-    if (is.na(mechanism@dims)) {
-      warning("No expected non-private dims slot set.")
-    }
-    if (length(rawR) != mechanism@dims) {
-      warning("Non-private target output has unexpected dimension.")
-    }
-    C <- sqrt(2 * log(1.25 / privacyParams@delta))
-    noise <- stats::rnorm(length(rawR), mean = 0,
-      sd = mechanism@sensitivity * C / privacyParams@epsilon)
-    R <- rawR + noise
-    if (is.na(mechanism@gammaSensitivity)) {
-      p <- privacyParams
-    } else {
-      p <- toGamma(privacyParams, mechanism@gammaSensitivity)
-    }
-    return(list(
-      privacyParams = p,
-      sensitivity = mechanism@sensitivity,
-      dims = mechanism@dims,
-      target = mechanism@target,
-      response = R
-    ))
-  }
-)
-
 #' \code{DPMechGaussian} response space L2 norm.
 #'
 #' Represents the L2 norm on \code{target} responses. For internal use.
@@ -98,5 +48,27 @@ setMethod(".numericNorm",
             rawR2 = "numeric"),
   function(object, rawR1, rawR2) {
     return(.l2norm(rawR1 - rawR2))
+  }
+)
+
+#' \code{DPMechGaussian} release response core.
+#'
+#' Implements the core calculation specific to the \code{DPMechGaussian}
+#' subclass \code{releaseResponse()}. Internal function, not to be called.
+#'
+#' @param object an instance of class \code{\link{DPMechGaussian-class}}.
+#' @param rawR a non-private response from \code{target}.
+#' @param privacyParams object of type \code{DPParamsDel}.
+#' @return a numeric private response.
+setMethod(".responseCore",
+  signature(object = "DPMechGaussian",
+            rawR = "numeric",
+            privacyParams = "DPParamsDel"),
+  function(object, rawR, privacyParams) {
+    C <- sqrt(2 * log(1.25 / privacyParams@delta))
+    noise <- stats::rnorm(length(rawR), mean = 0,
+                          sd = object@sensitivity * C / privacyParams@epsilon)
+    R <- rawR + noise
+    return(R)
   }
 )

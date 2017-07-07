@@ -5,28 +5,12 @@
 \alias{DPMechLaplace-class}
 \alias{DPMechLaplace}
 \alias{show,DPMechLaplace-method}
-\alias{releaseResponse,DPMechLaplace,DPParamsEps-method}
 \title{An S4 class for the Laplace mechanism of differential privacy.}
 \usage{
 \S4method{show}{DPMechLaplace}(object)
-
-\S4method{releaseResponse}{DPMechLaplace,DPParamsEps}(mechanism, privacyParams,
-  X)
 }
 \arguments{
 \item{object}{an instance of class \code{DPMech}.}
-
-\item{mechanism}{an object of class \code{\link{DPMechLaplace}}.}
-
-\item{privacyParams}{an object of class \code{\link{DPParamsEps}}.}
-
-\item{X}{a privacy-sensitive dataset, if using sensitivity sampler a: list,
-matrix, data frame, numeric/character vector.}
-}
-\value{
-list with slots per argument, actual privacy parameter; Laplace
-  mechanism response with length of target release:
-  \code{privacyParams, sensitivity, dims, target, response}.
 }
 \description{
 A class that implements the basic Laplace mechanism of differential privacy,
@@ -35,8 +19,6 @@ for privatizing numeric vector releases.
 \section{Methods (by generic)}{
 \itemize{
 \item \code{show}: automatically prints the object.
-
-\item \code{releaseResponse}: releases Laplace mechanism responses.
 }}
 
 \section{Slots}{
@@ -57,14 +39,6 @@ indicating that responses must be RDP with specific confidence.}
 probe \code{target} to determine dimension.}
 }}
 
-\examples{
-f <- function(xs) mean(xs)
-n <- 100
-m <- DPMechLaplace(sensitivity = 1/n, target = f, dims = 1)
-X <- runif(n)
-p <- DPParamsEps(epsilon = 1)
-releaseResponse(m, p, X)
-}
 \references{
 Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith.
   "Calibrating noise to sensitivity in private data analysis." In Theory of

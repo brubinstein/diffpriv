@@ -99,3 +99,62 @@ setMethod("sensitivityNorm",
 setGeneric(".numericNorm", function(object, rawR1, rawR2) {
   standardGeneric(".numericNorm")
 })
+
+#' \code{DPMechNumeric} release response core.
+#'
+#' Implements the core calculation specific to the \code{DPMechNUmeric}
+#' subclass \code{releaseResponse()}. Internal function, not to be called.
+#'
+#' @param object an instance of class \code{\link{DPMechNumeric-class}}.
+#' @param rawR a non-private response from \code{target}.
+#' @param privacyParams object of class (or subclass of) \code{DPParamsEps}.
+#' @return a numeric private response.
+setGeneric(".responseCore", function(object, rawR, privacyParams) {
+  standardGeneric(".responseCore")
+})
+
+#' @describeIn DPMechNumeric releases mechanism responses.
+#' @param privacyParams an object of class \code{\link{DPParamsEps}}.
+#' @param X a privacy-sensitive dataset, if using sensitivity sampler a: list,
+#'   matrix, data frame, numeric/character vector.
+#' @return list with slots per argument, actual privacy parameter;
+#'   mechanism response with length of target release:
+#'   \code{privacyParams, sensitivity, dims, target, response}.
+#' @examples
+#' f <- function(xs) mean(xs)
+#' n <- 100
+#' m <- DPMechLaplace(sensitivity = 1/n, target = f, dims = 1)
+#' X <- runif(n)
+#' p <- DPParamsEps(epsilon = 1)
+#' releaseResponse(m, p, X)
+#' @export
+setMethod("releaseResponse",
+  signature(mechanism = "DPMechNumeric",
+            privacyParams = "DPParamsEps",
+            X = "ANY"),
+  function(mechanism, privacyParams, X) {
+    rawR <- mechanism@target(X)
+    if (!is.numeric(rawR)) {
+      stop("Non-private target output non-numeric.")
+    }
+    if (is.na(mechanism@dims)) {
+      warning("No expected non-private dims slot set.")
+    }
+    if (length(rawR) != mechanism@dims) {
+      warning("Non-private target output has unexpected dimension.")
+    }
+    R <- .responseCore(mechanism, rawR = rawR, privacyParams = privacyParams)
+    if (is.na(mechanism@gammaSensitivity)) {
+      p <- privacyParams
+    } else {
+      p <- toGamma(privacyParams, mechanism@gammaSensitivity)
+    }
+    return(list(
+      privacyParams = p,
+      sensitivity = mechanism@sensitivity,
+      dims = mechanism@dims,
+      target = mechanism@target,
+      response = R
+    ))
+  }
+)

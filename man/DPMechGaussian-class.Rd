@@ -5,28 +5,12 @@
 \alias{DPMechGaussian-class}
 \alias{DPMechGaussian}
 \alias{show,DPMechGaussian-method}
-\alias{releaseResponse,DPMechGaussian,DPParamsDel-method}
 \title{An S4 class for the Gaussian mechanism of differential privacy.}
 \usage{
 \S4method{show}{DPMechGaussian}(object)
-
-\S4method{releaseResponse}{DPMechGaussian,DPParamsDel}(mechanism, privacyParams,
-  X)
 }
 \arguments{
 \item{object}{an instance of class \code{DPMech}.}
-
-\item{mechanism}{an object of class \code{\link{DPMechGaussian}}.}
-
-\item{privacyParams}{an object of class \code{\link{DPParamsDel}}.}
-
-\item{X}{a privacy-sensitive dataset, if using sensitivity sampler a: list,
-matrix, data frame, numeric/character vector.}
-}
-\value{
-list with slots per argument, actual privacy parameter; Gaussian
-  mechanism response with length of target release:
-  \code{privacyParams, sensitivity, dims, target, response}.
 }
 \description{
 A class that implements the Gaussian mechanism of differential privacy,
@@ -35,8 +19,6 @@ for privatizing numeric vector releases.
 \section{Methods (by generic)}{
 \itemize{
 \item \code{show}: automatically prints the object.
-
-\item \code{releaseResponse}: releases Gaussian mechanism responses.
 }}
 
 \section{Slots}{
@@ -57,14 +39,6 @@ indicating that responses must be RDP with specific confidence.}
 probe \code{target} to determine dimension.}
 }}
 
-\examples{
-f <- function(xs) mean(xs)
-n <- 100
-m <- DPMechGaussian(sensitivity = 1/n, target = f, dims = 1)
-X <- runif(n)
-p <- DPParamsDel(epsilon = 1, delta = 0.1)
-releaseResponse(m, p, X)
-}
 \references{
 Cynthia Dwork and Aaron Roth. "Algorithmic Foundations of
 Differential Privacy" Foundations and Trends in Theoretical Computer

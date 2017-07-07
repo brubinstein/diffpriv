@@ -12,6 +12,8 @@ test_that("DPMech show() runs without error", {
   expect_output(show(m), "laplace mechanism", ignore.case = TRUE)
   m@gammaSensitivity <- 0.2
   expect_output(show(m), "laplace mechanism", ignore.case = TRUE)
+  m <- DPMechGaussian(target = function(xs) c(1, 2), sensitivity = 1, dims = 2)
+  expect_output(show(m), "gaussian mechanism", ignore.case = TRUE)
 })
 
 test_that("DPMechLaplace response dimension", {
@@ -30,6 +32,12 @@ test_that("DPMechLaplace response dimension", {
   expect_warning(sensitivityNorm(m_df, 1:2, 1:2), "No expected dim",
     ignore.case = TRUE)
   expect_equal(sensitivityNorm(m_ey, 1:2, 1:2), 0)
+})
+
+test_that("DPMechGaussian response dimension", {
+  m_ok <- DPMechGaussian(target = function(xs) c(1, 2), sensitivity = 1, dims=2)
+  p <- DPParamsDel(epsilon = 1, delta = 0.1)
+  expect_length(releaseResponse(m_ok, privacyParams = p, X= 1:2)$response, 2)
 })
 
 test_that("DPMechLaplace checks are comprehensive", {
