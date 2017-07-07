@@ -269,9 +269,9 @@ setMethod("sensitivitySampler",
   }
 )
 
-#' Sensitivity sampler for \code{\link{DPMechLaplace-class}}.
+#' Sensitivity sampler for \code{\link{DPMechNumeric-class}}.
 #'
-#' Given a constructed \code{\link{DPMechLaplace-class}}, complete with
+#' Given a constructed \code{\link{DPMechNumeric-class}}, complete with
 #' \code{target} function and \code{sensitivityNorm,} and an \code{oracle} for
 #' producing records, samples the sensitivity of the target function to set the
 #' mechanism's \code{sensitivity}. Typically the method
@@ -281,7 +281,7 @@ setMethod("sensitivitySampler",
 #' probe \code{target} to determine response dimension when the
 #' corresponding \code{object@dims} is \code{NA}.
 #'
-#' @param object an object of class \code{\link{DPMechLaplace-class}}.
+#' @param object an object of class \code{\link{DPMechNumeric-class}}.
 #' @param oracle a source of random databases. A function returning: list,
 #'   matrix/data.frame (data in rows), numeric/character vector of records if
 #'   given desired length > 1; or single record given length 1, respectively
@@ -311,7 +311,7 @@ setMethod("sensitivitySampler",
 #'
 #' @export
 setMethod("sensitivitySamplerManual",
-  signature(object = "DPMechLaplace",
+  signature(object = "DPMechNumeric",
             oracle = "function",
             n = "numeric",
             m = "numeric",

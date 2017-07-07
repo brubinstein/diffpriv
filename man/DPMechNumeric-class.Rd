@@ -5,36 +5,23 @@
 \alias{DPMechNumeric-class}
 \alias{DPMechNumeric}
 \alias{show,DPMechNumeric-method}
-\alias{releaseResponse,DPMechNumeric,DPParamsEps-method}
 \alias{sensitivityNorm,DPMechNumeric-method}
 \title{A virtual S4 class for differentially-private numeric mechanisms.}
 \usage{
 \S4method{show}{DPMechNumeric}(object)
-
-\S4method{releaseResponse}{DPMechNumeric,DPParamsEps}(mechanism, privacyParams,
-  X)
 
 \S4method{sensitivityNorm}{DPMechNumeric}(mechanism, X1, X2)
 }
 \arguments{
 \item{object}{an instance of class \code{DPMech}.}
 
-\item{mechanism}{an object of class \code{\link{DPMechNumeric}}.}
-
-\item{privacyParams}{an object of class \code{\link{DPParamsEps}}.}
-
-\item{X}{a privacy-sensitive dataset, if using sensitivity sampler a: list,
-matrix, data frame, numeric/character vector.}
+\item{mechanism}{an object of class \code{DPMechNumeric-class}.}
 
 \item{X1}{a privacy-sensitive dataset, list if sensitivity sampler compatible.}
 
 \item{X2}{a privacy-sensitive dataset, list if sensitivity sampler compatible.}
 }
 \value{
-list with slots per argument, actual privacy parameter; Laplace
-  mechanism response with length of target release:
-  \code{privacyParams, sensitivity, dims, target, response}.
-
 scalar numeric norm of non-private \code{target} on datasets.
 }
 \description{
@@ -45,8 +32,6 @@ releases.
 \section{Methods (by generic)}{
 \itemize{
 \item \code{show}: automatically prints the object.
-
-\item \code{releaseResponse}: releases Laplace mechanism responses.
 
 \item \code{sensitivityNorm}: measures sensitivity of non-private \code{target}.
 }}
@@ -70,12 +55,6 @@ probe \code{target} to determine dimension.}
 }}
 
 \examples{
-f <- function(xs) mean(xs)
-n <- 100
-m <- DPMechLaplace(sensitivity = 1/n, target = f, dims = 1)
-X <- runif(n)
-p <- DPParamsEps(epsilon = 1)
-releaseResponse(m, p, X)
 f <- function(xs) mean(xs)
 n <- 100
 m <- DPMechLaplace(sensitivity = 1/n, target = f, dims = 1)

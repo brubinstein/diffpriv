@@ -48,57 +48,8 @@ setMethod("show", "DPMechNumeric", function(object) {
   show(object@target)
 })
 
-#' @describeIn DPMechNumeric releases Laplace mechanism responses.
-#' @param mechanism an object of class \code{\link{DPMechNumeric}}.
-#' @param privacyParams an object of class \code{\link{DPParamsEps}}.
-#' @param X a privacy-sensitive dataset, if using sensitivity sampler a: list,
-#'   matrix, data frame, numeric/character vector.
-#' @return list with slots per argument, actual privacy parameter; Laplace
-#'   mechanism response with length of target release:
-#'   \code{privacyParams, sensitivity, dims, target, response}.
-#' @examples
-#' f <- function(xs) mean(xs)
-#' n <- 100
-#' m <- DPMechLaplace(sensitivity = 1/n, target = f, dims = 1)
-#' X <- runif(n)
-#' p <- DPParamsEps(epsilon = 1)
-#' releaseResponse(m, p, X)
-#' @export
-setMethod("releaseResponse",
-  signature(mechanism = "DPMechNumeric",
-            privacyParams = "DPParamsEps",
-            X = "ANY"),
-  function(mechanism, privacyParams, X) {
-    rawR <- mechanism@target(X)
-    if (!is.numeric(rawR)) {
-      stop("Non-private target output non-numeric.")
-    }
-    if (is.na(mechanism@dims)) {
-      warning("No expected non-private dims slot set.")
-    }
-    if (length(rawR) != mechanism@dims) {
-      warning("Non-private target output has unexpected dimension.")
-    }
-    noise <- .rlap(length(rawR),
-                   location = 0,
-                   scale = mechanism@sensitivity / privacyParams@epsilon)
-    R <- rawR + noise
-    if (is.na(mechanism@gammaSensitivity)) {
-      p <- privacyParams
-    } else {
-      p <- toGamma(privacyParams, mechanism@gammaSensitivity)
-    }
-    return(list(
-      privacyParams = p,
-      sensitivity = mechanism@sensitivity,
-      dims = mechanism@dims,
-      target = mechanism@target,
-      response = R
-    ))
-  }
-)
-
 #' @describeIn DPMechNumeric measures sensitivity of non-private \code{target}.
+#' @param mechanism an object of class \code{DPMechNumeric-class}.
 #' @param X1 a privacy-sensitive dataset, list if sensitivity sampler compatible.
 #' @param X2 a privacy-sensitive dataset, list if sensitivity sampler compatible.
 #' @return scalar numeric norm of non-private \code{target} on datasets.

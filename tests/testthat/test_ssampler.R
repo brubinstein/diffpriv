@@ -26,6 +26,24 @@ test_that("sensitivitySampler methods check types", {
     ignore.case = TRUE)
   expect_error(.sensitivity_sampler_config(gamma = 0.0001, m = 100),
     "must exceed", ignore.case = TRUE)
+  qualF <- function(X) { function(r) sum(r == unlist(strsplit(X, ""))) }
+  m <- DPMechExponential(target = qualF, responseSet = as.list(letters))
+  library(randomNames)
+  P <- function(n) randomNames(n)
+  expect_error(sensitivitySamplerManual(m, oracle=P, n=1.1, m=100, k=99),
+    "integer", ignore.case=TRUE)
+  expect_error(sensitivitySamplerManual(m, oracle=P, n=0, m=100, k=99),
+    "integer", ignore.case=TRUE)
+  expect_error(sensitivitySamplerManual(m, oracle=P, n=10, m=100.1, k=99),
+    "integer", ignore.case=TRUE)
+  expect_error(sensitivitySamplerManual(m, oracle=P, n=10, m=0, k=0),
+    "integer", ignore.case=TRUE)
+  expect_error(sensitivitySamplerManual(m, oracle=P, n=10, m=100, k=99.9),
+    "integer", ignore.case=TRUE)
+  expect_error(sensitivitySamplerManual(m, oracle=P, n=10, m=100, k=101),
+    "k is not in", ignore.case=TRUE)
+  expect_error(sensitivitySamplerManual(m, oracle=P, n=10, m=100, k=0),
+    "k is not in", ignore.case=TRUE)
 })
 
 test_that("sensitivitySampler() returns expected responses", {

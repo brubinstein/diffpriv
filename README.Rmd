@@ -119,7 +119,8 @@ The above example demonstrates the main components of `diffpriv`:
   perturbation. Running mechanisms with obtained sensitivities yield slightly
   weaker random differential privacy.
 
-Read the [package vignette](inst/doc/diffpriv.pdf) for more.
+Read the [package vignette](inst/doc/diffpriv.pdf) for more. Release notes 
+under [news](NEWS.md).
 
 ## Citing the Package
 

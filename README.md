@@ -2,7 +2,7 @@
 diffpriv <img src="man/figures/logo.png" align="right" />
 =========================================================
 
-[![packageversion](https://img.shields.io/badge/Package%20version-0.3.0-orange.svg?style=flat-square)](commits/master) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.3.1-orange.svg?style=flat-square)](commits/master) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master)
 
 Overview
 --------
@@ -78,7 +78,7 @@ The above example demonstrates the main components of `diffpriv`:
 -   Class `DPParamsEps` and subclasses for encapsulating privacy parameters.
 -   `sensitivitySampler()` method of `DPMech` subclasses estimates target sensitivity necessary to run `DPMech` generic mechanisms. This provides an easy alternative to exact sensitivity bounds requiring mathematical analysis. The sampler repeatedly probes `target` to estimate its sensitivity to data perturbation. Running mechanisms with obtained sensitivities yield slightly weaker random differential privacy.
 
-Read the [package vignette](inst/doc/diffpriv.pdf) for more.
+Read the [package vignette](inst/doc/diffpriv.pdf) for more. Release notes under [news](NEWS.md).
 
 Citing the Package
 ------------------
