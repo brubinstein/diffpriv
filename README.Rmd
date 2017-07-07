@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "README-"
 )
-set.seed(5038563) # for reproducibility
+set.seed(3033362) # for reproducibility
 ```
 
 # diffpriv <img src="man/figures/logo.png" align="right" />
@@ -95,7 +95,7 @@ Finally we can produce private responses on an actual dataset `X`, displayed
 alongside the non-private response for comparison:
 
 ```{r example-4}
-X <- list(0.328,-1.444,-0.511,0.154,-2.062) # length is sensitivitySampler() n
+X <- c(0.328,-1.444,-0.511,0.154,-2.062) # length is sensitivitySampler() n
 r <- releaseResponse(mech, privacyParams = DPParamsEps(epsilon = 1), X = X)
 cat("Private response r$response:   ",   r$response,
     "\nNon-private response target(X):", target(X))

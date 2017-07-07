@@ -49,22 +49,18 @@ distr <- function(n) rnorm(n)
 mech <- sensitivitySampler(mech, oracle = distr, n = 5, gamma = 0.1)
 #> Sampling sensitivity with m=285 gamma=0.1 k=285
 mech@sensitivity
-#> [1] 0.7366379
+#> [1] 0.8089517
 ```
 
 Finally we can produce private responses on an actual dataset `X`, displayed alongside the non-private response for comparison:
 
 ``` r
-X <- list(0.328,-1.444,-0.511,0.154,-2.062) # length is sensitivitySampler() n
+X <- c(0.328,-1.444,-0.511,0.154,-2.062) # length is sensitivitySampler() n
 r <- releaseResponse(mech, privacyParams = DPParamsEps(epsilon = 1), X = X)
-#> Warning in mean.default(X): argument is not numeric or logical: returning
-#> NA
 cat("Private response r$response:   ",   r$response,
     "\nNon-private response target(X):", target(X))
-#> Warning in mean.default(X): argument is not numeric or logical: returning
-#> NA
-#> Private response r$response:    NA 
-#> Non-private response target(X): NA
+#> Private response r$response:    -1.137127 
+#> Non-private response target(X): -0.707
 ```
 
 Getting Started
