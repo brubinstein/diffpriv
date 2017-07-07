@@ -1,6 +1,6 @@
 # diffpriv 0.3.1
 
-* Removing extraneous `releaseResponse()` method from `DPMechNumeric`. Resolves #1
+* Refactoring around `releaseResponse()` method in `DPMechNumeric`. Resolves #1
 
 * Increased test coverage.
 
