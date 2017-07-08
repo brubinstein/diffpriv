@@ -78,6 +78,9 @@ setMethod("releaseResponse",
             X = "ANY"),
   function(mechanism, privacyParams, X) {
     scoreFunc <- mechanism@target(X)  ## target returns a function
+    if (!is.function(scoreFunc)) {
+      stop("Non-private target output is not a function.")
+    }
     qualities <- sapply(mechanism@responseSet, scoreFunc)
     pmf <- qualities * (getEpsilon(privacyParams) / (2*mechanism@sensitivity))
     pmf <- pmf / sum(pmf)
@@ -110,7 +113,7 @@ setMethod("sensitivityNorm",
     scoreFunc1 <- mechanism@target(X1)
     scoreFunc2 <- mechanism@target(X2)
     if (!is.function(scoreFunc1) || !is.function(scoreFunc2)) {
-      stop("Non-private target output is not a functioin.")
+      stop("Non-private target output is not a function.")
     }
     scores1 <- sapply(mechanism@responseSet, scoreFunc1)
     scores2 <- sapply(mechanism@responseSet, scoreFunc2)

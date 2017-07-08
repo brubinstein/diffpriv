@@ -40,6 +40,12 @@ test_that("DPMechGaussian response dimension", {
   expect_length(releaseResponse(m_ok, privacyParams = p, X= 1:2)$response, 2)
 })
 
+test_that("DPMechGaussian's .numericNorm() is accurate", {
+  m <- DPMechGaussian(target = function(xs) mean(xs))
+  xs <- c(1.5, -2)
+  expect_equal(.numericNorm(m, xs, -xs), 5)
+})
+
 test_that("DPMechLaplace checks are comprehensive", {
   p <- DPParamsEps(epsilon = 1)
   m <- DPMechLaplace(target = function(xs) "a", sensitivity = 1, dims = 1)
@@ -82,4 +88,15 @@ test_that("DPMechExponential's Linfty sensitivity norm is accurate", {
   D1 <- c("abcde", "aaaaa")
   D2 <- c("abcde", "fgh")
   expect_equal(sensitivityNorm(m, D1, D2), 5)
+})
+
+test_that("DPMechExponential expects target returns function", {
+  qualF <- function(X) mean(X)
+  rs <- as.list(letters)
+  m <- DPMechExponential(target = qualF, responseSet = rs)
+  X <- 1:5
+  expect_error(sensitivityNorm(m, X1 = X, X2 = X),
+    "not a function", ignore.case = TRUE)
+  expect_error(releaseResponse(m, privacyParams = DPParamsEps(), X = X),
+    "not a function", ignore.case = TRUE)
 })

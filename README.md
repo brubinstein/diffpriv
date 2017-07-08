@@ -2,7 +2,7 @@
 diffpriv <img src="man/figures/logo.png" align="right" />
 =========================================================
 
-[![packageversion](https://img.shields.io/badge/Package%20version-0.3.1-orange.svg?style=flat-square)](commits/master) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.3.2-orange.svg?style=flat-square)](commits/master) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master)
 
 Overview
 --------
@@ -23,7 +23,7 @@ devtools::install_github("brubinstein/diffpriv")
 Example
 -------
 
-A typical example in differential privacy is privately releasing a simple `target` function of privacy-sensitive input data `X`. Say the mean:
+A typical example in differential privacy is privately releasing a simple `target` function of privacy-sensitive input data `X`. Say the mean of `numeric` data:
 
 ``` r
 ## a target function we'd like to run on private data X, releasing the result
@@ -33,13 +33,13 @@ target <- function(X) mean(X)
 First load the `diffpriv` package (installed as above) and construct a chosen differentially-private mechanism for privatizing `target`.
 
 ``` r
-## target seeks to release a numeric, so we'll use the Laplace 
-## mechanism--a standard generic mechanism for numeric responses
+## target seeks to release a numeric, so we'll use the Laplace mechanism---a
+## standard generic mechanism for privatizing numeric responses
 library(diffpriv)
 mech <- DPMechLaplace(target = target)
 ```
 
-To run `mech` on some `X` we must first determine the sensitivity of `target` to small changes to input dataset. We could either assume bounded data then do the math, or we could use sensitivity sampling: repeated probing of `target` to estimate sensitivity automatically. We must specify a distribution `distr` for generating the probe datasets.
+To run `mech` on a dataset `X` we must first determine the sensitivity of `target` to small changes to input dataset. One avenue is to analytically bound sensitivity (on paper; see the [vignette](inst/doc/diffpriv.pdf)) and supply it via the `sensitivity` argument of mechanism construction: in this case not hard if we assume bounded data, but in general sensitivity can be very non-trivial to calculate manually. The other approach, which we follow in this example, is sensitivity sampling: repeated probing of `target` to estimate sensitivity automatically. We need only specify a distribution for generating random probe datasets; `sensitivitySampler()` takes care of the rest. The price we pay for this convenience is the weaker form of random differential privacy.
 
 ``` r
 ## set a dataset sampling distribution, then estimate target sensitivity with
@@ -48,17 +48,17 @@ To run `mech` on some `X` we must first determine the sensitivity of `target` to
 distr <- function(n) rnorm(n)
 mech <- sensitivitySampler(mech, oracle = distr, n = 5, gamma = 0.1)
 #> Sampling sensitivity with m=285 gamma=0.1 k=285
-mech@sensitivity
+mech@sensitivity    ## DPMech and subclasses are S4: slots accessed via @
 #> [1] 0.8089517
 ```
 
-Finally we can produce private responses on an actual dataset `X`, displayed alongside the non-private response for comparison:
+With a sensitivity-calibrated mechanism in hand, we can release private responses on a dataset `X`, displayed alongside the non-private response for comparison:
 
 ``` r
 X <- c(0.328,-1.444,-0.511,0.154,-2.062) # length is sensitivitySampler() n
 r <- releaseResponse(mech, privacyParams = DPParamsEps(epsilon = 1), X = X)
-cat("Private response r$response:   ",   r$response,
-    "\nNon-private response target(X):", target(X))
+cat("Private response r$response:   ", r$response,
+  "\nNon-private response target(X):", target(X))
 #> Private response r$response:    -1.137127 
 #> Non-private response target(X): -0.707
 ```
@@ -69,12 +69,12 @@ Getting Started
 The above example demonstrates the main components of `diffpriv`:
 
 -   Virtual class `DPMech` for generic mechanisms that captures the non-private `target` and releases privatized responses from it. Current subclasses
-    -   `DPMechLaplace`: the Laplace mechanism for releasing numeric responses; and
+    -   `DPMechLaplace`, `DPMechGaussian`: the Laplace and Gaussian mechanisms for releasing numeric responses with additive noise; and
     -   `DPMechExponential`: the exponential mechanism for privately optimizing over finite sets (which need not be numeric).
 -   Class `DPParamsEps` and subclasses for encapsulating privacy parameters.
--   `sensitivitySampler()` method of `DPMech` subclasses estimates target sensitivity necessary to run `DPMech` generic mechanisms. This provides an easy alternative to exact sensitivity bounds requiring mathematical analysis. The sampler repeatedly probes `target` to estimate its sensitivity to data perturbation. Running mechanisms with obtained sensitivities yield slightly weaker random differential privacy.
+-   `sensitivitySampler()` method of `DPMech` subclasses estimates target sensitivity necessary to run `releaseResponse()` of `DPMech` generic mechanisms. This provides an easy alternative to exact sensitivity bounds requiring mathematical analysis. The sampler repeatedly probes `DPMech@target` to estimate sensitivity to data perturbation. Running mechanisms with obtained sensitivities yield random differential privacy.
 
-Read the [package vignette](inst/doc/diffpriv.pdf) for more. Release notes under [news](NEWS.md).
+Read the [package vignette](inst/doc/diffpriv.pdf) for more, or [news](NEWS.md) for the latest release notes.
 
 Citing the Package
 ------------------
@@ -86,5 +86,6 @@ Citing the Package
 Other relevant references to cite depending on usage:
 
 -   **Differential privacy and the Laplace mechanism:** Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith. "Calibrating noise to sensitivity in private data analysis." In Theory of Cryptography Conference, pp. 265-284. Springer Berlin Heidelberg, 2006.
+-   **The Gaussian mechanism:** Cynthia Dwork and Aaron Roth. "The algorithmic foundations of differential privacy." Foundations and Trends in Theoretical Computer Science 9(3–4), pp. 211-407, 2014.
 -   **The exponential mechanism:** Frank McSherry and Kunal Talwar. "Mechanism design via differential privacy." In the 48th Annual IEEE Symposium on Foundations of Computer Science (FOCS'07), pp. 94-103. IEEE, 2007.
 -   **Random differential privacy:** Rob Hall, Alessandro Rinaldo, and Larry Wasserman. "Random Differential Privacy." Journal of Privacy and Confidentiality, 4(2), pp. 43-59, 2012.

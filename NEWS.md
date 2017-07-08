@@ -1,3 +1,9 @@
+# diffpriv 0.3.2
+
+* Addition of `DPMechGaussian` class for the generic Gaussian mechanism to README, Vignette. Resolves #2
+
+* Minor test additions.
+
 # diffpriv 0.3.1
 
 * Refactoring around `releaseResponse()` method in `DPMechNumeric`. Resolves #1
