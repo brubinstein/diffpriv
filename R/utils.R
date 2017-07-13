@@ -55,9 +55,9 @@
     stop("Given scale is not scalar non-negative.")
   if (scale <= 0)
     rep(location, n)
-  rep(location, n)
-  + stats::rexp(n = n, rate = 1/scale)
-  - stats::rexp(n = n, rate = 1/scale)
+  rep(location, n) +
+    stats::rexp(n = n, rate = 1/scale) -
+    stats::rexp(n = n, rate = 1/scale)
 }
 
 #' The L1 norm.
