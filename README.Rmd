@@ -30,6 +30,7 @@ rvers <- gsub('.*(\\d+.\\d+.\\d+).*', '\\1', rm)
 ```
 
 [![packageversion](https://img.shields.io/badge/Package%20version-`r version`-orange.svg?style=flat-square)](commits/master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/diffpriv)](https://cran.r-project.org/package=diffpriv)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-`r rvers`-6666ff.svg)](https://cran.r-project.org/)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/)
 [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv)
@@ -115,9 +116,11 @@ The above example demonstrates the main components of `diffpriv`:
 * Virtual class `DPMech` for generic mechanisms that captures the non-private
   `target` and releases privatized responses from it. Current subclasses
     + `DPMechLaplace`, `DPMechGaussian`: the Laplace and Gaussian mechanisms 
-      for releasing numeric responses with additive noise;  and
+      for releasing numeric responses with additive noise;
     + `DPMechExponential`: the exponential mechanism for privately 
-      optimizing over finite sets (which need not be numeric).
+      optimizing over finite sets (which need not be numeric); and
+    + `DPMechBernstein`: the Bernstein mechanism for privately releasing 
+      multivariate real-valued functions.
 * Class `DPParamsEps` and subclasses for encapsulating privacy parameters.
 * `sensitivitySampler()` method of `DPMech` subclasses estimates target 
   sensitivity necessary to run `releaseResponse()` of `DPMech` generic 
@@ -151,6 +154,10 @@ Other relevant references to cite depending on usage:
 * **The exponential mechanism:** Frank McSherry and Kunal Talwar. "Mechanism 
   design via differential privacy." In the 48th Annual IEEE Symposium on 
   Foundations of Computer Science (FOCS'07), pp. 94-103. IEEE, 2007.
+* **The Bernstein mechanism:** Francesco Alda and Benjamin I. P. Rubinstein. 
+  "The Bernstein Mechanism: Function Release under Differential Privacy." In
+  Proceedings of the 31st AAAI Conference on Artificial Intelligence
+  (AAAI'2017), pp. 1705-1711, 2017.
 * **Random differential privacy:** Rob Hall, Alessandro Rinaldo, and Larry 
   Wasserman. "Random Differential Privacy." Journal of Privacy and 
   Confidentiality, 4(2), pp. 43-59, 2012. 

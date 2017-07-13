@@ -2,7 +2,7 @@
 diffpriv <img src="man/figures/logo.png" align="right" />
 =========================================================
 
-[![packageversion](https://img.shields.io/badge/Package%20version-0.3.2-orange.svg?style=flat-square)](commits/master) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.4.0-orange.svg?style=flat-square)](commits/master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/diffpriv)](https://cran.r-project.org/package=diffpriv) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master)
 
 Overview
 --------
@@ -59,7 +59,7 @@ X <- c(0.328,-1.444,-0.511,0.154,-2.062) # length is sensitivitySampler() n
 r <- releaseResponse(mech, privacyParams = DPParamsEps(epsilon = 1), X = X)
 cat("Private response r$response:   ", r$response,
   "\nNon-private response target(X):", target(X))
-#> Private response r$response:    -1.137127 
+#> Private response r$response:    -1.119506 
 #> Non-private response target(X): -0.707
 ```
 
@@ -69,8 +69,9 @@ Getting Started
 The above example demonstrates the main components of `diffpriv`:
 
 -   Virtual class `DPMech` for generic mechanisms that captures the non-private `target` and releases privatized responses from it. Current subclasses
-    -   `DPMechLaplace`, `DPMechGaussian`: the Laplace and Gaussian mechanisms for releasing numeric responses with additive noise; and
-    -   `DPMechExponential`: the exponential mechanism for privately optimizing over finite sets (which need not be numeric).
+    -   `DPMechLaplace`, `DPMechGaussian`: the Laplace and Gaussian mechanisms for releasing numeric responses with additive noise;
+    -   `DPMechExponential`: the exponential mechanism for privately optimizing over finite sets (which need not be numeric); and
+    -   `DPMechBernstein`: the Bernstein mechanism for privately releasing multivariate real-valued functions.
 -   Class `DPParamsEps` and subclasses for encapsulating privacy parameters.
 -   `sensitivitySampler()` method of `DPMech` subclasses estimates target sensitivity necessary to run `releaseResponse()` of `DPMech` generic mechanisms. This provides an easy alternative to exact sensitivity bounds requiring mathematical analysis. The sampler repeatedly probes `DPMech@target` to estimate sensitivity to data perturbation. Running mechanisms with obtained sensitivities yield random differential privacy.
 
@@ -88,4 +89,5 @@ Other relevant references to cite depending on usage:
 -   **Differential privacy and the Laplace mechanism:** Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith. "Calibrating noise to sensitivity in private data analysis." In Theory of Cryptography Conference, pp. 265-284. Springer Berlin Heidelberg, 2006.
 -   **The Gaussian mechanism:** Cynthia Dwork and Aaron Roth. "The algorithmic foundations of differential privacy." Foundations and Trends in Theoretical Computer Science 9(3–4), pp. 211-407, 2014.
 -   **The exponential mechanism:** Frank McSherry and Kunal Talwar. "Mechanism design via differential privacy." In the 48th Annual IEEE Symposium on Foundations of Computer Science (FOCS'07), pp. 94-103. IEEE, 2007.
+-   **The Bernstein mechanism:** Francesco Alda and Benjamin I. P. Rubinstein. "The Bernstein Mechanism: Function Release under Differential Privacy." In Proceedings of the 31st AAAI Conference on Artificial Intelligence (AAAI'2017), pp. 1705-1711, 2017.
 -   **Random differential privacy:** Rob Hall, Alessandro Rinaldo, and Larry Wasserman. "Random Differential Privacy." Journal of Privacy and Confidentiality, 4(2), pp. 43-59, 2012.

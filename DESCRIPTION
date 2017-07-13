@@ -1,8 +1,8 @@
 Package: diffpriv
 Type: Package
 Title: Generic Mechanisms for Differential Privacy
-Version: 0.3.2
-Date: 2017-07-08
+Version: 0.4.0
+Date: 2017-07-13
 Authors@R: c(
     person(c("Benjamin", "I.", "P."), "Rubinstein", email = "brubinstein@unimelb.edu.au", role = c("aut", "cre")),
     person("Francesco", "Alda", email = "francesco.alda@gmail.com", role = "aut"))
@@ -20,6 +20,8 @@ Imports:
     gsl,
     methods,
     stats
+URL: https://github.com/brubinstein/diffpriv
+BugReports: https://github.com/brubinstein/diffpriv/issues
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 Suggests:
@@ -27,10 +29,12 @@ Suggests:
     testthat,
     knitr
 Collate: 
-    'diffpriv.R'
     'utils.R'
+    'bernstein_polynomials.R'
     'privacy_params.R'
     'mechanisms.R'
+    'bernstein_mechanism.R'
+    'diffpriv.R'
     'exponential_mechanism.R'
     'numeric_mechanism.R'
     'gaussian_mechanism.R'

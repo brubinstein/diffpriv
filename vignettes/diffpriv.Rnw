@@ -68,11 +68,11 @@ on privacy-sensitive data to untrusted third parties, differential
 privacy has become the framework of choice for privacy-preserving
 learning. \pck delivers: (a) implementations of popular generic
 mechanisms for privatizing non-private target functions, including the
-Laplace, Gaussian and exponential mechanisms; (b) a recent sensitivity sampler
-due to \citet{rubinstein2017sampler} that empirically estimates the
-sensitivity of non-private targets---obviating mathematical analysis for
-exact sensitivity bounds needed for most generic mechanisms; (c) an
-extensible framework for implementing differentially-private mechanism.
+Laplace, Gaussian, exponential and Bernstein mechanisms; (b) a recent
+sensitivity sampler due to \citet{rubinstein2017sampler} that empirically
+estimates the sensitivity of non-private targets---obviating mathematical
+analysis for exact sensitivity bounds needed for most generic mechanisms;
+(c) an extensible framework for implementing differentially-private mechanism.
 Together, the components of \pck permit easy high-utility privatization
 of complex analyses, learners and even black-box software programs.
 \end{abstract}
@@ -135,13 +135,12 @@ $\Pr{M(D)\in R}\leq \exp(\epsilon)\cdot\Pr{M(D')\in R}+\delta$.
 \end{definition}
 
 Mechanism $M$ preserves differential privacy if its response distributions are
-close on neighboring pairs: an adversarial observer can not determine an
+close on neighboring pairs: an adversary cannot determine an
 unknown record from $M$ responses, even with knowledge of the other $n-1$
 records.
-
-Privacy parameters $\epsilon$ ($\epsilon,\delta$) are encapsulated in \pck
-class \code{DPParamsEps} (\code{DPParamsDel} respectively). As most mechanisms
-operate at tunable privacy levels, virtual \code{DPMech} generic method
+Privacy parameters $\epsilon$ ($\epsilon,\delta$) are encapsulated in
+class \code{DPParamsEps} (\code{DPParamsDel} respectively).
+Virtual \code{DPMech} generic method
 \texttt{releaseResponse(mechanism, privacyParams, X)} takes privacy
 parameters along with sensitive dataset. Most generic mechanisms in
 differential privacy share a number of properties leveraged by the \pck package
@@ -187,18 +186,20 @@ the specific mechanism). We now demonstrate this use case.
 
 \paragraph{Example: Laplace mechanism.}
 \pck implements Laplace~\citep{dwork2006calibrating},
-Gaussian~\citep{dwork2014algorithmic} and
-exponential~\citep{mcsherry2007mechanism} mechanisms as \code{DPMech}
-subclasses \code{DPMechLaplace}, \code{DPMechGaussian} and
-\code{DPMechExponential}. An exponential example is given in the next section.
-\code{DPMechLaplace} is appropriate for releasing numeric
-vectors. The Laplace mechanism requires that \cB be numeric $\reals^d$ for some
+Gaussian~\citep{dwork2014algorithmic},
+exponential~\citep{mcsherry2007mechanism}, and
+Bernstein~\citep{alda2017bernstein} mechanisms as \code{DPMech} subclasses
+\code{DPMechLaplace}, \code{DPMechGaussian}, \code{DPMechExponential}, and
+\code{DPMechBernstein}. An exponential example is included below.
+\code{DPMechLaplace} releases numeric vectors, and requires that \cB be numeric
+$\reals^d$ for some
 $d$ and adopts the $L_1$ norm (sum of absolutes) for $\|\cdot\|_{\cB}$. The
 mechanism releases vectors in $\cR=\cB=\reals^d$ by adding an i.i.d. sample of
 $d$ Laplace-distributed random variables with means 0 and scales
 $\overline{\Delta}/\epsilon$ to $f(D)$ to achieve $\epsilon$-differential
 privacy. \code{DPMechGaussian} also privatizes numeric responses but under
-$L_2$-sensitivity and weaker $(\epsilon,\delta)$-DP.
+$L_2$-sensitivity and weaker $(\epsilon,\delta)$-DP; \code{DPMechBernstein}
+leverages the Laplace mechanism to release multivariate real-valued functions.
 
 We next demonstrate Laplace privatization of the sample mean on
 bounded data in $\cD^n=[0,1]^n$, for which \cB dimension \code{dims} $d$ is
