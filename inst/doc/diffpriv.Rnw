@@ -66,7 +66,7 @@ The \R package \pck provides tools for statistics and machine
 learning under differential privacy. Suitable for releasing analyses
 on privacy-sensitive data to untrusted third parties, differential
 privacy has become the framework of choice for privacy-preserving
-learning. \pck delivers: (a) implementations of popular generic
+learning. \pck delivers: (a) implementations of generic
 mechanisms for privatizing non-private target functions, including the
 Laplace, Gaussian, exponential and Bernstein mechanisms; (b) a recent
 sensitivity sampler due to \citet{rubinstein2017sampler} that empirically
@@ -108,7 +108,7 @@ sampler that replaces exact sensitivity bounds with empirical
 estimates~\citep{rubinstein2017sampler}. As a result, \pck privatizes a wide
 range of procedures under random differential privacy~\citep{hall2012random},
 automatically without mathematical analysis and in many cases achieving high
-utility.
+utility. \pck is available from \url{https://github.com/brubinstein/diffpriv} under open-source license.
 
 \section{Generic Mechanisms for Differential Privacy}
 \label{sec:generic}

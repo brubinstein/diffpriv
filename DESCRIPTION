@@ -1,7 +1,7 @@
 Package: diffpriv
 Type: Package
 Title: Generic Mechanisms for Differential Privacy
-Version: 0.4.0
+Version: 0.4.1
 Date: 2017-07-13
 Authors@R: c(
     person(c("Benjamin", "I.", "P."), "Rubinstein", email = "brubinstein@unimelb.edu.au", role = c("aut", "cre")),

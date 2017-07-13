@@ -20,6 +20,17 @@ test_that(".bernstein_lattice() checks invalid input", {
   expect_error(.bernstein_lattice(d=1, k=0), "integer k", ignore.case=TRUE)
 })
 
+test_that("bernstein() checks invalid input", {
+  f <- function(xs) xs[1] * sin(xs[2]*10)
+  d <- 2
+  k <- 5
+  expect_error(bernstein(1, dims=d, k=k), "function", ignore.case = TRUE)
+  expect_error(bernstein(f, dims=1.2, k=k), "integer dims", ignore.case = TRUE)
+  expect_error(bernstein(f, dims=0, k=k), "integer dims", ignore.case = TRUE)
+  expect_error(bernstein(f, dims=d, k=2.3), "integer k", ignore.case = TRUE)
+  expect_error(bernstein(f, dims=d, k=0), "integer k", ignore.case = TRUE)
+})
+
 test_that("bernstein() can construct S3 class", {
   tf <- function(xs) xs[1] * sin(xs[2]*10)
   d <- 2
@@ -30,6 +41,22 @@ test_that("bernstein() can construct S3 class", {
   expect_length(bf$coeffs, (k+1)^d)
 })
 
+test_that("predict.bernstein() checks invalid input", {
+  tf <- function(xs) xs[1] * sin(xs[2]*10)
+  d <- 2
+  k <- 5
+  X <- c(0.5, 0.5)
+  bf <- bernstein(tf, dims = d, k = k)
+  class(bf) <- "list"
+  expect_error(predict.bernstein(bf,X), "type 'bernstein'", ignore.case = TRUE)
+  bf <- bernstein(tf, dims = d, k = k)
+  expect_error(predict(bf, "a"), "numeric data", ignore.case = TRUE)
+  expect_error(predict(bf, -1:0), "unit interval", ignore.case = TRUE)
+  expect_error(predict(bf, 1:2), "unit interval", ignore.case = TRUE)
+  expect_error(predict(bf, matrix(0:1,ncol=1)), "columns", ignore.case = TRUE)
+  expect_error(predict(bf, 1), "length", ignore.case = TRUE)
+})
+
 test_that("predict.bernstein() can compute values", {
   tf <- function(xs) xs[1] * sin(xs[2]*10)
   d <- 2
@@ -38,6 +65,11 @@ test_that("predict.bernstein() can compute values", {
   r <- predict(bf, c(0.2, 0.3))
   expect_lte(r, 1)
   expect_gte(r, -1)
+  tf <- function(x) x * sin(x*10)
+  d <- 1
+  k <- 5
+  bf <- bernstein(tf, dims = d, k = k)
+  expect_length(predict(bf, c(0.2, 0.3)), 2)
 })
 
 test_that("DPMechBernstein validity checks", {
@@ -83,6 +115,12 @@ test_that("DPMechBernstein releaseResponse() operates", {
   newY <- r$response(newX)
   expect_is(newY, "numeric")
   expect_length(newY, 2)
+})
+
+test_that("DPMechBernstein sensitivityNorm() checks invalid input", {
+  f <- function(D) { 2 }
+  m <- DPMechBernstein(target = f, latticeK = 10, dims = 1)
+  expect_error(sensitivityNorm(m,1,2), "not a function", ignore.case = TRUE)
 })
 
 test_that("DPMechBernstein sensitivityNorm() values in range", {
