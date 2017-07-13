@@ -56,7 +56,8 @@ setMethod("show", "DPMechExponential", function(object) {
 #' @describeIn DPMechExponential releases exponential mechanism responses.
 #' @param mechanism an object of class \code{\link{DPMechExponential}}.
 #' @param privacyParams an object of class \code{\link{DPParamsEps}}.
-#' @param X a privacy-sensitive dataset, a list if using sensitivity sampler.
+#' @param X a privacy-sensitive dataset, if using sensitivity sampler a: list,
+#'   matrix, data frame, numeric/character vector.
 #' @return list with slots per argument, actual privacy parameter and response:
 #'   mechanism response with length of target release:
 #'   \code{privacyParams, sensitivity, responseSet, target, response}.
@@ -101,8 +102,8 @@ setMethod("releaseResponse",
 )
 
 #' @describeIn DPMechExponential measures \code{target} quality score sensitivity.
-#' @param X1 a privacy-sensitive dataset, list if sensitivity sampler compatible.
-#' @param X2 a privacy-sensitive dataset, list if sensitivity sampler compatible.
+#' @param X1 a privacy-sensitive dataset.
+#' @param X2 a privacy-sensitive dataset.
 #' @return scalar numeric norm of non-private \code{target} on datasets.
 #' @export
 setMethod("sensitivityNorm",

@@ -50,8 +50,8 @@ setMethod("show", "DPMechNumeric", function(object) {
 
 #' @describeIn DPMechNumeric measures sensitivity of non-private \code{target}.
 #' @param mechanism an object of class \code{DPMechNumeric-class}.
-#' @param X1 a privacy-sensitive dataset, list if sensitivity sampler compatible.
-#' @param X2 a privacy-sensitive dataset, list if sensitivity sampler compatible.
+#' @param X1 a privacy-sensitive dataset.
+#' @param X2 a privacy-sensitive dataset.
 #' @return scalar numeric norm of non-private \code{target} on datasets.
 #' @examples
 #' f <- function(xs) mean(xs)

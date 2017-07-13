@@ -58,7 +58,8 @@ setValidity("DPMech", function(object) {
 #'
 #' @param mechanism an object of class \code{\link{DPMech-class}}.
 #' @param privacyParams an object of class \code{\link{DPParamsEps}} or subclass.
-#' @param X a privacy-sensitive dataset.
+#' @param X a privacy-sensitive dataset, if using sensitivity sampler a: list,
+#'   matrix, data frame, numeric/character vector.
 #' @return list with slots per argument, including at least: actual privacy
 #'   parameters \code{privacyParams}, and response \code{response}.
 setGeneric("releaseResponse", function(mechanism, privacyParams, X) {

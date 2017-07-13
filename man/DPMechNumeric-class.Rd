@@ -21,9 +21,9 @@
 
 \item{mechanism}{an object of class \code{DPMechNumeric-class}.}
 
-\item{X1}{a privacy-sensitive dataset, list if sensitivity sampler compatible.}
+\item{X1}{a privacy-sensitive dataset.}
 
-\item{X2}{a privacy-sensitive dataset, list if sensitivity sampler compatible.}
+\item{X2}{a privacy-sensitive dataset.}
 
 \item{privacyParams}{an object of class \code{\link{DPParamsEps}}.}
 

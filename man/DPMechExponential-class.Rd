@@ -23,11 +23,12 @@
 
 \item{privacyParams}{an object of class \code{\link{DPParamsEps}}.}
 
-\item{X}{a privacy-sensitive dataset, a list if using sensitivity sampler.}
+\item{X}{a privacy-sensitive dataset, if using sensitivity sampler a: list,
+matrix, data frame, numeric/character vector.}
 
-\item{X1}{a privacy-sensitive dataset, list if sensitivity sampler compatible.}
+\item{X1}{a privacy-sensitive dataset.}
 
-\item{X2}{a privacy-sensitive dataset, list if sensitivity sampler compatible.}
+\item{X2}{a privacy-sensitive dataset.}
 }
 \value{
 list with slots per argument, actual privacy parameter and response:

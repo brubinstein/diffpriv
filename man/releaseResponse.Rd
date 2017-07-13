@@ -11,7 +11,8 @@ releaseResponse(mechanism, privacyParams, X)
 
 \item{privacyParams}{an object of class \code{\link{DPParamsEps}} or subclass.}
 
-\item{X}{a privacy-sensitive dataset.}
+\item{X}{a privacy-sensitive dataset, if using sensitivity sampler a: list,
+matrix, data frame, numeric/character vector.}
 }
 \value{
 list with slots per argument, including at least: actual privacy
