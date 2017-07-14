@@ -49,7 +49,7 @@ differential privacy to be proved, and is used to calibrate privacy-preserving
 randomization. Unfortunately bounding sensitivity is often prohibitively
 complex, for example if \code{target} is an arbitrary computer program. All
 \code{\link{DPMech-class}} mechanisms offer a \code{\link{sensitivitySampler}}
-method due to Rubinstein and Alda (2017) that repeatedly probes \code{target}
+method due to Rubinstein and Aldà (2017) that repeatedly probes \code{target}
 to estimate sensitivity automatically. Mechanisms with estimated sensitivities
 achieve a slightly weaker form of random differential privacy due to
 Hall et al. (2013), but without any theoretical analysis necessary.
@@ -63,7 +63,7 @@ vignette("diffpriv")
 
 }
 \references{
-Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential
+Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential
   Privacy with Sensitivity Sampling", accepted into the 34th International
   Conference on Machine Learning (ICML'2017), May 2017.
 

@@ -2,7 +2,7 @@
 diffpriv <img src="man/figures/logo.png" align="right" />
 =========================================================
 
-[![packageversion](https://img.shields.io/badge/Package%20version-0.4.1-orange.svg?style=flat-square)](commits/master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/diffpriv)](https://cran.r-project.org/package=diffpriv) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.4.2-orange.svg?style=flat-square)](commits/master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/diffpriv)](https://cran.r-project.org/package=diffpriv) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master)
 
 Overview
 --------
@@ -82,12 +82,12 @@ Citing the Package
 
 `diffpriv` is an open-source package offered with a permissive MIT License. Please acknowledge use of `diffpriv` by citing the paper on the sensitivity sampler:
 
-> Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential Privacy with Sensitivity Sampling", accepted into the 34th International Conference on Machine Learning (ICML'2017), May 2017.
+> Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential Privacy with Sensitivity Sampling", to appear in the 34th International Conference on Machine Learning (ICML'2017), 2017.
 
 Other relevant references to cite depending on usage:
 
 -   **Differential privacy and the Laplace mechanism:** Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith. "Calibrating noise to sensitivity in private data analysis." In Theory of Cryptography Conference, pp. 265-284. Springer Berlin Heidelberg, 2006.
 -   **The Gaussian mechanism:** Cynthia Dwork and Aaron Roth. "The algorithmic foundations of differential privacy." Foundations and Trends in Theoretical Computer Science 9(3–4), pp. 211-407, 2014.
 -   **The exponential mechanism:** Frank McSherry and Kunal Talwar. "Mechanism design via differential privacy." In the 48th Annual IEEE Symposium on Foundations of Computer Science (FOCS'07), pp. 94-103. IEEE, 2007.
--   **The Bernstein mechanism:** Francesco Alda and Benjamin I. P. Rubinstein. "The Bernstein Mechanism: Function Release under Differential Privacy." In Proceedings of the 31st AAAI Conference on Artificial Intelligence (AAAI'2017), pp. 1705-1711, 2017.
+-   **The Bernstein mechanism:** Francesco Aldà and Benjamin I. P. Rubinstein. "The Bernstein Mechanism: Function Release under Differential Privacy." In Proceedings of the 31st AAAI Conference on Artificial Intelligence (AAAI'2017), pp. 1705-1711, 2017.
 -   **Random differential privacy:** Rob Hall, Alessandro Rinaldo, and Larry Wasserman. "Random Differential Privacy." Journal of Privacy and Confidentiality, 4(2), pp. 43-59, 2012.

@@ -22,7 +22,7 @@ NULL
 #' @param k order statistic index in {1,...,\code{m}}.
 #' @return \code{object} with updated sensitivity parameter.
 #'
-#' @references Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential
+#' @references Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential
 #'   Privacy with Sensitivity Sampling", accepted into the 34th International
 #'   Conference on Machine Learning (ICML'2017), May 2017.
 #'
@@ -65,7 +65,7 @@ setGeneric("sensitivitySamplerManual",
 #' @return \code{object} with updated sensitivity parameter.
 #'
 #' @references
-#' Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential
+#' Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential
 #'   Privacy with Sensitivity Sampling", accepted into the 34th International
 #'   Conference on Machine Learning (ICML'2017), May 2017.
 #'
@@ -130,7 +130,7 @@ setMethod("sensitivitySamplerManual",
 #' }
 #'
 #' @references
-#' Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential
+#' Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential
 #'   Privacy with Sensitivity Sampling", accepted into the 34th International
 #'   Conference on Machine Learning (ICML'2017), May 2017.
 .sensitivity_sampler_config <- function(m = NA_integer_, gamma = NA_real_,
@@ -193,7 +193,7 @@ setMethod("sensitivitySamplerManual",
 #' @return \code{object} with updated \code{gammaSensitivity} slot.
 #'
 #' @references
-#' Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential
+#' Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential
 #'   Privacy with Sensitivity Sampling", accepted into the 34th International
 #'   Conference on Machine Learning (ICML'2017), May 2017.
 #'
@@ -233,7 +233,7 @@ setGeneric("sensitivitySampler",
 #' @return \code{object} with updated \code{gammaSensitivity} slot.
 #'
 #' @references
-#' Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential
+#' Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential
 #'   Privacy with Sensitivity Sampling", accepted into the 34th International
 #'   Conference on Machine Learning (ICML'2017), May 2017.
 #'
@@ -294,7 +294,7 @@ setMethod("sensitivitySampler",
 #'   \code{dims}.
 #'
 #' @references
-#' Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential
+#' Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential
 #'   Privacy with Sensitivity Sampling", accepted into the 34th International
 #'   Conference on Machine Learning (ICML'2017), May 2017.
 #'

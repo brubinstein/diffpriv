@@ -1,11 +1,11 @@
 Package: diffpriv
 Type: Package
 Title: Generic Mechanisms for Differential Privacy
-Version: 0.4.1
-Date: 2017-07-13
+Version: 0.4.2
+Date: 2017-07-14
 Authors@R: c(
     person(c("Benjamin", "I.", "P."), "Rubinstein", email = "brubinstein@unimelb.edu.au", role = c("aut", "cre")),
-    person("Francesco", "Alda", email = "francesco.alda@gmail.com", role = "aut"))
+    person("Francesco", "Aldà", email = "francesco.alda@gmail.com", role = "aut"))
 Description: An implementation of major general-purpose mechanisms for privatizing
     statistics, models, and machine learners, within the framework of differential
     privacy of Dwork et al. (2006). Example mechanisms include the Laplace
@@ -24,11 +24,13 @@ URL: https://github.com/brubinstein/diffpriv
 BugReports: https://github.com/brubinstein/diffpriv/issues
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
+Encoding: UTF-8
 Suggests:
     randomNames,
     testthat,
-    knitr
-Collate: 
+    knitr,
+    rmarkdown
+Collate:
     'utils.R'
     'bernstein_polynomials.R'
     'privacy_params.R'

@@ -31,7 +31,7 @@ mean((f(xs) - predict(b,xs))^2)
 
 }
 \references{
-Francesco Alda and Benjamin I. P. Rubinstein. "The Bernstein Mechanism:
+Francesco Aldà and Benjamin I. P. Rubinstein. "The Bernstein Mechanism:
   Function Release under Differential Privacy", in Proceedings of the 31st
   AAAI Conference on Artificial Intelligence (AAAI'2017), pp. 1705-1711,
   Feb 2017.

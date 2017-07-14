@@ -46,7 +46,7 @@ m@sensitivity
 
 }
 \references{
-Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential
+Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential
   Privacy with Sensitivity Sampling", accepted into the 34th International
   Conference on Machine Learning (ICML'2017), May 2017.
 }

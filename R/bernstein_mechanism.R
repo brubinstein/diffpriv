@@ -21,8 +21,11 @@ NULL
 #' @slot dims positive scalar integer-valued numeric specifying the dimension
 #'   of released function domain. Defaults to (invalid) \code{NA_integer_}.
 #'
+#' @examples
+#' ## See the bernstein vignette
+#'
 #' @references
-#' Francesco Alda and Benjamin I. P. Rubinstein. "The Bernstein Mechanism:
+#' Francesco Aldà and Benjamin I. P. Rubinstein. "The Bernstein Mechanism:
 #'   Function Release under Differential Privacy", in Proceedings of the 31st
 #'   AAAI Conference on Artificial Intelligence (AAAI'2017), pp. 1705-1711,
 #'   Feb 2017.

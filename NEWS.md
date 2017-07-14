@@ -1,3 +1,8 @@
+# diffpriv 0.4.2
+
+* Second vignette `bernstein` on: Bernstein approximations and use of `DPMechBernstein` for private function release.
+* Minor edits to docs
+
 # diffpriv 0.4.1
 
 * Expanding test coverage of Bernstein mechanism and function approximation code.

@@ -138,9 +138,9 @@ for the latest release notes.
 Please acknowledge use of `diffpriv` by citing the paper on the sensitivity 
 sampler:
 
-> Benjamin I. P. Rubinstein and Francesco Alda. "Pain-Free Random Differential 
-> Privacy with Sensitivity Sampling", accepted into the 34th International
-> Conference on Machine Learning (ICML'2017), May 2017.
+> Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential 
+> Privacy with Sensitivity Sampling", to appear in the 34th International
+> Conference on Machine Learning (ICML'2017), 2017.
 
 Other relevant references to cite depending on usage:
 
@@ -154,7 +154,7 @@ Other relevant references to cite depending on usage:
 * **The exponential mechanism:** Frank McSherry and Kunal Talwar. "Mechanism 
   design via differential privacy." In the 48th Annual IEEE Symposium on 
   Foundations of Computer Science (FOCS'07), pp. 94-103. IEEE, 2007.
-* **The Bernstein mechanism:** Francesco Alda and Benjamin I. P. Rubinstein. 
+* **The Bernstein mechanism:** Francesco Aldà and Benjamin I. P. Rubinstein. 
   "The Bernstein Mechanism: Function Release under Differential Privacy." In
   Proceedings of the 31st AAAI Conference on Artificial Intelligence
   (AAAI'2017), pp. 1705-1711, 2017.

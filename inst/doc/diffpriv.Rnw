@@ -55,7 +55,7 @@
        \name Francesco Ald\`{a} \email francesco.alda@rub.de \\
        \addr Horst G\"ortz Institute for IT Security and Faculty of Mathematics\\
        Ruhr-Universit\"at Bochum,
-       D-44780 Bochum, Germany}
+       D-44801 Bochum, Germany}
 
 \editor{TBD}
 
@@ -72,7 +72,7 @@ Laplace, Gaussian, exponential and Bernstein mechanisms; (b) a recent
 sensitivity sampler due to \citet{rubinstein2017sampler} that empirically
 estimates the sensitivity of non-private targets---obviating mathematical
 analysis for exact sensitivity bounds needed for most generic mechanisms;
-(c) an extensible framework for implementing differentially-private mechanism.
+(c) an extensible framework for implementing differentially-private mechanisms.
 Together, the components of \pck permit easy high-utility privatization
 of complex analyses, learners and even black-box software programs.
 \end{abstract}
@@ -108,19 +108,19 @@ sampler that replaces exact sensitivity bounds with empirical
 estimates~\citep{rubinstein2017sampler}. As a result, \pck privatizes a wide
 range of procedures under random differential privacy~\citep{hall2012random},
 automatically without mathematical analysis and in many cases achieving high
-utility. \pck is available from \url{https://github.com/brubinstein/diffpriv} under open-source license.
+utility. \pck is available from \texttt{https://github.com/brubinstein/diffpriv} under an open-source license.
 
 \section{Generic Mechanisms for Differential Privacy}
 \label{sec:generic}
 
 Fundamental to differential privacy is a privacy-sensitive
 \term{dataset} (or \term{database}) $D\in\cD^n$ on \term{domain} \cD.
-In \pck a dataset can be any \texttt{list}, \texttt{matrix},
+In \pck a dataset can be a \texttt{list}, \texttt{matrix},
 \texttt{data.frame}, \texttt{vector}. We say that a pair of
 databases $D,D'\in\cD^n$ is \term{neighboring} if they differ on
 exactly one record. While individual records should not
-be revealed, we aim to privately release aggregate information
-on $D$ with a mechanism. A \term{mechanism} $M: \cD \to \cR$ is a
+be revealed, we aim to release aggregate information
+on $D$ with a mechanism. A \term{mechanism} $M: \cD^n \to \cR$ is a
 random-valued function of databases taking values in a response set \cR;
 implemented in \pck as virtual class \code{DPMech}.
 
