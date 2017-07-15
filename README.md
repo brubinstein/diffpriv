@@ -71,7 +71,7 @@ The above example demonstrates the main components of `diffpriv`:
 -   Virtual class `DPMech` for generic mechanisms that captures the non-private `target` and releases privatized responses from it. Current subclasses
     -   `DPMechLaplace`, `DPMechGaussian`: the Laplace and Gaussian mechanisms for releasing numeric responses with additive noise;
     -   `DPMechExponential`: the exponential mechanism for privately optimizing over finite sets (which need not be numeric); and
-    -   `DPMechBernstein`: the Bernstein mechanism for privately releasing multivariate real-valued functions.
+    -   `DPMechBernstein`: the Bernstein mechanism for privately releasing multivariate real-valued functions. See the [bernstein vignette](inst/doc/bernstein.pdf) for more.
 -   Class `DPParamsEps` and subclasses for encapsulating privacy parameters.
 -   `sensitivitySampler()` method of `DPMech` subclasses estimates target sensitivity necessary to run `releaseResponse()` of `DPMech` generic mechanisms. This provides an easy alternative to exact sensitivity bounds requiring mathematical analysis. The sampler repeatedly probes `DPMech@target` to estimate sensitivity to data perturbation. Running mechanisms with obtained sensitivities yield random differential privacy.
 

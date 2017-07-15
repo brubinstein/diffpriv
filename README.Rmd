@@ -120,7 +120,8 @@ The above example demonstrates the main components of `diffpriv`:
     + `DPMechExponential`: the exponential mechanism for privately 
       optimizing over finite sets (which need not be numeric); and
     + `DPMechBernstein`: the Bernstein mechanism for privately releasing 
-      multivariate real-valued functions.
+      multivariate real-valued functions. See the 
+      [bernstein vignette](inst/doc/bernstein.pdf) for more.
 * Class `DPParamsEps` and subclasses for encapsulating privacy parameters.
 * `sensitivitySampler()` method of `DPMech` subclasses estimates target 
   sensitivity necessary to run `releaseResponse()` of `DPMech` generic 
