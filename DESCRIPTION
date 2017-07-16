@@ -20,7 +20,7 @@ Imports:
     gsl,
     methods,
     stats
-URL: https://github.com/brubinstein/diffpriv
+URL: https://github.com/brubinstein/diffpriv, http://brubinstein.github.io/diffpriv
 BugReports: https://github.com/brubinstein/diffpriv/issues
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr

@@ -9,6 +9,8 @@
 ## Clean and Rebuild
 ## devtools::document()
 ## devtools::build_vignettes()
+## [manually update pkg version (and if necessary min R version) in README.rmd]
+## knit README.rmd
 ## source this file
 ## build_site(articles = c("diffpriv.pdf", "bernstein.pdf")
 ## a Check
