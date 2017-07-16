@@ -1,0 +1,40 @@
+url: http://brubinstein.github.io/diffpriv
+
+template:
+  params:
+    bootswatch: flatly
+
+reference:
+  - title: Mechanisms
+    desc: Generic mechanisms for differential privacy.
+    contents:
+    - starts_with("DPMech")
+  - title: Sensitivity Sampling
+    desc: Automatically estimating non-private target function sensitivity.
+    contents:
+    - sensitivitySampler
+  - title: Privacy Parameters
+    desc: Encapsulating privacy budget.
+    contents:
+    - starts_with("DPParams")
+
+navbar:
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: "Tutorials (pdf)"
+      menu:
+        - text: "diffpriv package"
+          href: articles/diffpriv.pdf
+        - text: "Bernstein mechanism"
+          href: articles/bernstein.pdf
+    - text: "Docs"
+      href: reference/index.html
+    - text: "News"
+      href: news/index.html
+
+authors:
+  Benjamin I. P. Rubinstein:
+    href: http://bipr.net
+  Francesco Aldà:
+    href: http://www.ruhr-uni-bochum.de/lmi/alda/

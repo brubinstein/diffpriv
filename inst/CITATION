@@ -1,12 +1,15 @@
 citHeader("To cite diffpriv in publications use:")
 
-citEntry(entry = "manual",
-  title        = "The diffpriv Package for Black-Box Differential Privacy in R",
+citEntry(entry = "inproceedings",
+  title        = "Pain-Free Random Differential Privacy with Sensitivity Sampling",
   author       = personList(person(c("Benjamin", "I.", "P."), "Rubinstein"),
                             person("Francesco", "Alda")),
   year         = "2017",
+  booktitle    = "34th International Conference on Machine Learning (ICML'2017)",
 
   textVersion  =
   paste("Benjamin I. P. Rubinstein and Francesco Alda (2017).",
-        "The diffpriv Package for Black-Box Differential Privacy in R.")
+        "'Pain-Free Random Differential Privacy with Sensitivity Sampling'",
+        "in the 34th International Conference on Machine Learning (ICML'2017).")
 )
+

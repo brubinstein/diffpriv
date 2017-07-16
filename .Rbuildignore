@@ -6,3 +6,6 @@
 ^NEWS\.md$
 ^\.travis\.yml$
 ^\.codecov\.yml$
+^_pkgdown\.yml$
+^docs$
+^build_site\.R$
