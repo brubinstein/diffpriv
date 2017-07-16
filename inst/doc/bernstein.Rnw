@@ -3,59 +3,45 @@
 
 \documentclass[twoside,11pt]{article}
 
-% Any additional packages needed should be included after jmlr2e.
-% Note that jmlr2e.sty includes epsfig, amssymb, natbib and graphicx,
-% and defines many common macros, such as 'proof' and 'example'.
-%
-% It also sets the bibliographystyle to plainnat; for more information on
-% natbib citation styles, see the natbib documentation, a copy of which
-% is archived at http://www.jmlr.org/format/natbib.pdf
-
-\usepackage{jmlr2e}
+\usepackage[in]{fullpage}
+\usepackage{amsfonts}
 \usepackage{xspace}
+\usepackage{natbib}
 
 % Definitions of handy macros can go here
-
 \newcommand{\pckPlain}{diffpriv\xspace}
 \newcommand{\pck}{\textsf{\pckPlain}\xspace}
 \newcommand{\R}{\textsf{R}\xspace}
 \newcommand{\code}[1]{\texttt{#1}\xspace}
-
-% Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
-
-\jmlrheading{18}{2017}{1--5}{7/17}{}{}{Benjamin I. P. Rubinstein and Francesco Ald\`{a}}
-
-% Short headings should be running head and authors last names
-
-\ShortHeadings{The Bernstein Mechansim}{Rubinstein and Ald\`{a}}
-\firstpageno{1}
 
 \begin{document}
 %%\SweaveOpts{concordance=TRUE}
 
 \title{The Bernstein Mechansim}
 
-\author{\name Benjamin I. P. Rubinstein \email brubinstein@unimelb.edu.au \\
-       \addr School of Computing and Information Systems\\
-       The University of Melbourne,
-       Parkville, VIC 3010, Australia
-       \AND
-       \name Francesco Ald\`{a} \email francesco.alda@rub.de \\
-       \addr Horst G\"ortz Institute for IT Security and Faculty of Mathematics\\
-       Ruhr-Universit\"at Bochum,
-       D-44801 Bochum, Germany}
+\author{\pck team}
 
-\editor{-}
+%\author{\name Benjamin I. P. Rubinstein \email brubinstein@unimelb.edu.au \\
+       %\addr School of Computing and Information Systems\\
+       %The University of Melbourne,
+       %Parkville, VIC 3010, Australia
+       %\AND
+       %\name Francesco Ald\`{a} \email francesco.alda@rub.de \\
+       %\addr Horst G\"ortz Institute for IT Security and Faculty of Mathematics\\
+       %Ruhr-Universit\"at Bochum,
+       %D-44801 Bochum, Germany}
+
+%\editor{-}
 
 \maketitle
 
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
-This vignette presents a short tutorial on the application of the generic Bernstein mechanism \code{DPMechBernstein} for differentially-private release of functions in the \pck \R package.
+This vignette presents a short tutorial on the application of the generic Bernstein mechanism \code{DPMechBernstein} for differentially-private release of functions in the \pck \R package\footnote{The \pck can be found at \texttt{https://github.com/brubinstein/diffpriv}}.
 \end{abstract}
 
-\begin{keywords}
-differential privacy, Bernstein polynomials, R, open-source software
-\end{keywords}
+%\begin{keywords}
+%differential privacy, Bernstein polynomials, R, open-source software
+%\end{keywords}
 
 \section{Introduction}
 
@@ -205,13 +191,13 @@ yhats.p <- R$response(xs)
 
 We can now finally visually compare the three fitted models, alongside the original training dataset.
 
-<<example2-5, include=TRUE, echo=TRUE, results='markup', fig.show='hold', fig.width=7, fig.height=3.5, fig.cap = "Kernel regression on 1D training data (points): non-private model (red dashed); non-private Bernstein polynomial approximation (green dotted); private Bernstein mechanism (blue solid).">>=
+<<example2-5, include=TRUE, echo=TRUE, results='markup', fig.show='hold', fig.width=7, fig.height=3.5, fig.cap = "Kernel regression on 1D training data (gray points): non-private model (red dashed); non-private Bernstein polynomial approximation (black dotted); private Bernstein mechanism (blue solid).">>=
 xlim <- c(0, 1)
 ylim <- range(c(yhats.b, yhats.p, yhats, D[,2]))
-plot(D, pch=20, cex=0.8, xlim=c(0,1), ylim=ylim, xlab="X", ylab="Y",
-    main="Priestly-Chao Kernel Regression", col="grey")
+plot(D, pch=20, cex=0.6, xlim=c(0,1), ylim=ylim, xlab="X", ylab="Y",
+    main="Priestly-Chao Kernel Regression", col="lightgrey")
 lines(xs, yhats.p, col="blue",  type="l", lty="solid", lwd = 2)
-lines(xs, yhats.b, col="green", type="l", lty="dotted", lwd = 2)
+lines(xs, yhats.b, col="black", type="l", lty="dotted", lwd = 3)
 lines(xs, yhats,   col="red",   type="l", lty="dashed", lwd =2)
 @
 
@@ -239,7 +225,8 @@ Further details on the sampler can be found there.
 
 %\acks{B. Rubinstein and F. Ald\`a acknowledge the support of the Australian Research Council (DE160100584) and the DFG Research Training Group GRK 1817/1 respectively.}
 
-\vskip 0.2in
+%\vskip 0.2in
+\bibliographystyle{alpha}
 \bibliography{diffpriv}
 
 \end{document}

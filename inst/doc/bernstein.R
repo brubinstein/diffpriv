@@ -72,12 +72,12 @@ yhats   <- sapply(xs, model)
 yhats.b <- predict(bmodel, xs)
 yhats.p <- R$response(xs)
 
-## ----example2-5, include=TRUE, echo=TRUE, results='markup', fig.show='hold', fig.width=7, fig.height=3.5, fig.cap = "Kernel regression on 1D training data (points): non-private model (red dashed); non-private Bernstein polynomial approximation (green dotted); private Bernstein mechanism (blue solid)."----
+## ----example2-5, include=TRUE, echo=TRUE, results='markup', fig.show='hold', fig.width=7, fig.height=3.5, fig.cap = "Kernel regression on 1D training data (gray points): non-private model (red dashed); non-private Bernstein polynomial approximation (black dotted); private Bernstein mechanism (blue solid)."----
 xlim <- c(0, 1)
 ylim <- range(c(yhats.b, yhats.p, yhats, D[,2]))
-plot(D, pch=20, cex=0.8, xlim=c(0,1), ylim=ylim, xlab="X", ylab="Y",
-    main="Priestly-Chao Kernel Regression", col="grey")
+plot(D, pch=20, cex=0.6, xlim=c(0,1), ylim=ylim, xlab="X", ylab="Y",
+    main="Priestly-Chao Kernel Regression", col="lightgrey")
 lines(xs, yhats.p, col="blue",  type="l", lty="solid", lwd = 2)
-lines(xs, yhats.b, col="green", type="l", lty="dotted", lwd = 2)
+lines(xs, yhats.b, col="black", type="l", lty="dotted", lwd = 3)
 lines(xs, yhats,   col="red",   type="l", lty="dashed", lwd =2)
 
