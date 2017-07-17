@@ -104,8 +104,8 @@
     
     <p>A class that implements the Bernstein mechanism (not iterated version) of
 differential privacy, for privatizing release of real-valued functions on
-\(\[0,1\]^{\ell}\)#' based on arbitrary datasets. Approximates the
-<code>target</code> on a lattice.</p>
+\([0,1]^l\) based on arbitrary datasets. Approximates the <code>target</code>
+on a lattice.</p>
     
 
     <pre class="usage"><span class='co'># S4 method for DPMechBernstein</span>
@@ -172,7 +172,7 @@ matrix, data frame, numeric/character vector.</p></td>
 sensitivity maximized over the lattice. Defaults to <code>Inf</code> for use
 with <code><a href='sensitivitySampler.html'>sensitivitySampler()</a></code>.</p></dd>
     <dt><code>target</code></dt><dd><p>might be a closure that takes arbitrary dataset and returns a
-real-valued function on \(\[0,1\]^{\ell}\).</p></dd>
+real-valued function on \([0,1]^l\).</p></dd>
     <dt><code>gammaSensitivity</code></dt><dd><p><code>NA_real_</code> if deactive, or scalar in [0,1)
 indicating that responses must be RDP with specific confidence.</p></dd>
     <dt><code>latticeK</code></dt><dd><p>positive scalar integer-valued numeric specifying the lattice

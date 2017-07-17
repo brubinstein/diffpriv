@@ -23,7 +23,7 @@ NULL
 #' Fit a Bernstein polynomial approximation.
 #'
 #' Fits the basis of Bernstein polynomial functions to given real-valued
-#' function \code{f} of \eqn{\[0,1\]^d} where \eqn{d=}\code{dims}, against
+#' function \code{f} of \eqn{[0,1]^d} where \eqn{d=}\code{dims}, against
 #' a regular lattice of \eqn{k+1} points in each dimension for given
 #' \code{k}. Note the approximation is not the iterated variant.
 #'

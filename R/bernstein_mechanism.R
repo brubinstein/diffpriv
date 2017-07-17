@@ -6,14 +6,14 @@ NULL
 #'
 #' A class that implements the Bernstein mechanism (not iterated version) of
 #' differential privacy, for privatizing release of real-valued functions on
-#' \eqn{\[0,1\]^{\ell}}#' based on arbitrary datasets. Approximates the
-#' \code{target} on a lattice.
+#' \eqn{[0,1]^l} based on arbitrary datasets. Approximates the \code{target}
+#' on a lattice.
 #'
 #' @slot sensitivity non-negative scalar numeric maximum absolute \code{target}
 #'   sensitivity maximized over the lattice. Defaults to \code{Inf} for use
 #'   with \code{sensitivitySampler()}.
 #' @slot target might be a closure that takes arbitrary dataset and returns a
-#'   real-valued function on \eqn{\[0,1\]^{\ell}}.
+#'   real-valued function on \eqn{[0,1]^l}.
 #' @slot gammaSensitivity \code{NA_real_} if deactive, or scalar in [0,1)
 #'   indicating that responses must be RDP with specific confidence.
 #' @slot latticeK positive scalar integer-valued numeric specifying the lattice
