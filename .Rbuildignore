@@ -10,3 +10,4 @@
 ^docs$
 ^build_site\.R$
 ^present$
+^cran-comments\.md$
