@@ -45,7 +45,7 @@
 \begin{document}
 %%\SweaveOpts{concordance=TRUE}
 
-\title{\pckPlain: An R Package for Practical Differential Privacy}
+\title{\pckPlain: An R Package for Easy Differential Privacy}
 
 \author{\name Benjamin I. P. Rubinstein \email brubinstein@unimelb.edu.au \\
        \addr School of Computing and Information Systems\\
