@@ -4,7 +4,7 @@
 \name{diffpriv}
 \alias{diffpriv}
 \alias{diffpriv-package}
-\title{\code{diffpriv}: easy differential privacy in R.}
+\title{\code{diffpriv}: practical differential privacy in R.}
 \description{
 The \code{diffpriv} package is a collection of generic tools for privacy-aware
 data science, under the formal framework of differential privacy. A

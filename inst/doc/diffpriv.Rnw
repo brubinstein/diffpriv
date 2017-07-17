@@ -39,13 +39,13 @@
 
 % Short headings should be running head and authors last names
 
-\ShortHeadings{\pckPlain: An R Package for Easy Differential Privacy}{Rubinstein and Ald\`{a}}
+\ShortHeadings{\pckPlain: An R Package for Practical Differential Privacy}{Rubinstein and Ald\`{a}}
 \firstpageno{1}
 
 \begin{document}
 %%\SweaveOpts{concordance=TRUE}
 
-\title{\pckPlain: An R Package for Easy Differential Privacy}
+\title{\pckPlain: An R Package for Practical Differential Privacy}
 
 \author{\name Benjamin I. P. Rubinstein \email brubinstein@unimelb.edu.au \\
        \addr School of Computing and Information Systems\\
@@ -108,7 +108,7 @@ sampler that replaces exact sensitivity bounds with empirical
 estimates~\citep{rubinstein2017sampler}. As a result, \pck privatizes a wide
 range of procedures under random differential privacy~\citep{hall2012random},
 automatically without mathematical analysis and in many cases achieving high
-utility. \pck is available from \texttt{https://brubinstein.github.io/diffpriv/} under an open-source license.
+utility. \pck is available from \texttt{https://github.com/brubinstein/diffpriv} under an open-source license.
 
 \section{Generic Mechanisms for Differential Privacy}
 \label{sec:generic}

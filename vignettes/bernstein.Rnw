@@ -36,7 +36,7 @@
 \maketitle
 
 \begin{abstract}%   <- trailing '%' for backward compatibility of .sty file
-This vignette presents a short tutorial on the application of the generic Bernstein mechanism \code{DPMechBernstein} for differentially-private release of functions in the \pck \R package\footnote{The \pck can be found at \texttt{https://brubinstein.github.io/diffpriv/}}.
+This vignette presents a short tutorial on the application of the generic Bernstein mechanism \code{DPMechBernstein} for differentially-private release of functions in the \pck \R package\footnote{The \pck can be found at \texttt{https://github.com/brubinstein/diffpriv}}.
 \end{abstract}
 
 %\begin{keywords}
@@ -123,7 +123,7 @@ A sufficient level of Laplace noise depends on the global sensitivity of the tar
 
 \subsection{Example}
 
-Suppose we want to fit a sensitive dataset \code{D} with  Priestly-Chao kernel regression, using the Gaussian kernel with a \code{bandwidth} hyperparameter specifying kernel smoothness. For simplicity, we'll consider a single co-variate. A fitting function for the estimator is given as follows. It takes \code{D} a 2-column matrix with examples in rows, and returns a function for making predictions on new data.
+Suppose we want to fit a sensitive dataset \code{D} with  Priestly-Chao kernel regression, using the Gaussian kernel with a \code{bandwidth} hyperparameter specifying kernel smoothness. For simplicity, we'll consider a single co-variate. A fitting function for the estimator is given as follows. It takes code{D} a 2-column matrix with examples in rows, and returns a function for making predictions on new data.
 
 <<example2-1, include=TRUE, echo=TRUE, results='markup'>>=
 pck_regression <- function(D, bandwidth = 0.1) {
