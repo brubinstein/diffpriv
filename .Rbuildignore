@@ -9,3 +9,5 @@
 ^_pkgdown\.yml$
 ^docs$
 ^build_site\.R$
+^papers$
+^cran-comments\.md$

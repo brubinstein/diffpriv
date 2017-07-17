@@ -1,17 +1,23 @@
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{diffpriv}
 
-\documentclass[twoside,11pt]{article}
+\documentclass[wcp]{jmlr}
 
-% Any additional packages needed should be included after jmlr2e.
-% Note that jmlr2e.sty includes epsfig, amssymb, natbib and graphicx,
-% and defines many common macros, such as 'proof' and 'example'.
-%
-% It also sets the bibliographystyle to plainnat; for more information on
-% natbib citation styles, see the natbib documentation, a copy of which
-% is archived at http://www.jmlr.org/format/natbib.pdf
+ % The following packages will be automatically loaded:
+ % amsmath, amssymb, natbib, graphicx, url, algorithm2e
 
-\usepackage{jmlr2e}
+ %\usepackage{rotating}% for sideways figures and tables
+ %\usepackage{longtable}% for long tables
+ % The booktabs package is used by this sample document
+ % (it provides \toprule, \midrule and \bottomrule).
+ % Remove the next line if you don't require it.
+ % \usepackage{booktabs}
+
+ % change the arguments, as appropriate, in the following:
+\jmlrvolume{1}
+\jmlryear{2017}
+\jmlrworkshop{ICML 2017 AutoML Workshop}
+
 \usepackage{xspace}
 
 % Definitions of handy macros can go here
@@ -33,31 +39,22 @@
 \newcommand{\indic}[1]{\ensuremath{\mathbf{1}\left[#1\right]}}
 \newcommand{\code}[1]{\texttt{#1}\xspace}
 
-% Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
+\title[\pckPlain: An R Package for Easy Differential Privacy]{Presentation-Only Demo -\\ \pckPlain: An R Package for Easy Differential Privacy}
 
-\jmlrheading{18}{2017}{1--5}{7/17}{}{}{Benjamin I. P. Rubinstein and Francesco Ald\`{a}}
-
-% Short headings should be running head and authors last names
-
-\ShortHeadings{\pckPlain: An R Package for Easy Differential Privacy}{Rubinstein and Ald\`{a}}
-\firstpageno{1}
-
-\begin{document}
-%%\SweaveOpts{concordance=TRUE}
-
-\title{\pckPlain: An R Package for Easy Differential Privacy}
-
-\author{\name Benjamin I. P. Rubinstein \email brubinstein@unimelb.edu.au \\
+\author{\Name{Benjamin I. P. Rubinstein} \Email{brubinstein@unimelb.edu.au} \\
        \addr School of Computing and Information Systems\\
        The University of Melbourne,
        Parkville, VIC 3010, Australia
        \AND
-       \name Francesco Ald\`{a} \email francesco.alda@rub.de \\
+       \Name{Francesco Ald\`{a}} \Email{francesco.alda@rub.de} \\
        \addr Horst G\"ortz Institute for IT Security and Faculty of Mathematics\\
        Ruhr-Universit\"at Bochum,
-       D-44801 Bochum, Germany}
+       D-44801 Bochum, Germany
+       }
 
-\editor{TBD}
+% \editors{List of editors' names}
+
+\begin{document}
 
 \maketitle
 
@@ -309,9 +306,101 @@ cat("Private response r$response: ", r$response,
   "\nNon-private f(D) maximizer:  ", letters[which.max(sapply(rSet, f(D)))])
 @
 
-\vspace{-2em}
+\paragraph{Example: Bernstein mechanism.} Our final example demonstrates
+\code{DPMechBernstein} which implements the Bernstein mechanism for private
+function release~\citep{alda2017bernstein}. Here the non-private \code{target}
+function must itself (depending on a sensitive dataset) return a real-valued
+function on $[0,1]^d$ for some \code{dims} $d$. The mechanism operates by
+fitting a Bernstein polynomial approximation to this released function,
+perturbing (via Laplace mechanism) the coefficients of this approximation,
+and then multiplying the dataset-independent Bernstein basis polynomials
+by these perturbed coefficients to reconstruct a private approximation.
+An additional argument to mechanism construction is the Bernstein polynomial
+degree \code{latticeK} which is also the size of the grid (in each dimension)
+on which the target release is evaluated.
 
-%Since mechanisms, notably Laplace and exponential, tend to use the norm $\|\cdot\|_{\cB}$ only for computing sensitivity $\Delta(D,D')$, and tend to assume one particular norm, \pck represents a minimal interface to the norm via \code{DPMech} method \code{sensitivityNorm()}. In implemented generic mechanisms that require a fixed norm, this norm is built into the corresponding method. For (future) user-defined mechanisms, function-dependent norms can also be supplied at initialization by extended the class constructor.
+Consider fitting sensitive dataset \code{D} with Priestly-Chao kernel regression, using the Gaussian kernel with a \code{bandwidth} hyperparameter specifying kernel smoothness. For simplicity, we'll consider a single co-variate. A fitting function for the estimator is as follows. It takes \code{D} a 2-column matrix with examples in rows, and returns a function for making predictions on new data.
+
+<<example2-1, include=TRUE, echo=TRUE, results='markup'>>=
+pck_regression <- function(D, bandwidth = 0.1) {
+  K <- function(x) exp(-x^2/2)
+  ids <- sort(D[,1], decreasing = FALSE, index.return = TRUE)$ix
+  D <- D[ids, ]
+  n <- nrow(D)
+  ws <- (D[2:n,1] - D[1:(n-1),1]) * D[2:n,2]
+  predictor <- function(x) {
+    sum(ws * sapply((x - D[2:n,1]) / bandwidth, K)) / bandwidth
+  }
+  return(predictor)
+}
+@
+
+We have the following (synthetic) sensitive dataset, as a $250\times 2$ matrix with the first column representing co-variates/features and the second column representing dependent variables/labels.
+
+<<example2-2, include=TRUE, echo=TRUE, results='markup'>>=
+N <- 250
+D <- runif(N)
+D <- cbind(D, sin(D*10)*D + rnorm(N, mean=0, sd=0.2))
+@
+
+Let's fit three models for comparison:
+A non-private exact Priestly-Chao regression given by \code{model};
+A non-private Bernstein approximation of the exact regression \code{bmodel}; and
+A privatized regression produced by \code{DPMechBernstein}, \code{pmodel}.
+
+<<example2-3, include=TRUE, echo=TRUE, results='markup'>>=
+## Non private fitting
+model <- pck_regression(D)
+
+## Bernstein non private fitting
+K <- 25
+bmodel <- bernstein(model, dims=1, k=K)
+
+## Private Bernstein fitting
+m <- DPMechBernstein(target=pck_regression, latticeK=K, dims=1)
+P <- function(n) {  # a sampler of random, "plausible", datasets
+  Dx <- runif(n)
+  Dy <- rep(0, n)
+  if (runif(1) < 0.95) Dy <- Dy + Dx
+  if (runif(1) < 0.5) Dy <- Dy * sin(Dx)
+  if (runif(1) < 0.5) Dy <- Dy * cos(Dx)
+  cbind(Dx, Dy + rnorm(n, mean=0, sd=0.2))
+}
+m <- sensitivitySampler(m, oracle=P, n=N, gamma=0.20, m=500)
+R <- releaseResponse(m, privacyParams=DPParamsEps(epsilon=5), X=D)
+pmodel <- R$response
+@
+
+The private model is produced as described above. \code{sensitivitySampler()} probes the non-private model with $500$ random pairs of datasets, sampled from \code{P()}, to estimate the target's sensitivity. The resulting perturbed private model preserves random differential privacy with level $\epsilon=5$ and confidence $\gamma=0.2$. In practice we could easily take $\gamma$ much smaller (much higher confidence) by increasing sensitivity sample size \code{m}.
+
+Let's now take our three fitted models, and predict the dependent variable/label across a range of covariates/features. These values are displayed in Figure~1.
+
+<<example2-4, include=TRUE, echo=TRUE, results='markup'>>=
+xs <- seq(from=0, to=1, length=50)
+yhats   <- sapply(xs, model)
+yhats.b <- predict(bmodel, xs)
+yhats.p <- R$response(xs)
+@
+
+%We can now finally visually compare the three fitted models, alongside the original training dataset.
+
+<<example2-5, include=TRUE, echo=FALSE, results='markup', fig.show='hold', fig.width=6, fig.height=2, fig.cap = "Kernel regression on 1D training data (gray points): non-private model (red dashed); non-private Bernstein polynomial approximation (black dotted); private Bernstein mechanism (blue solid).">>=
+xlim <- c(0, 1)
+ylim <- range(c(yhats.b, yhats.p, yhats, D[,2]))
+par(mar=c(4,4,1,0)+0.1)  # first 2 from 4, suppress main title space
+plot(D, pch=20, cex=0.6, xlim=c(0,1), ylim=ylim, xlab="X", ylab="Y",
+    #main="Priestly-Chao Kernel Regression",
+    col="lightgrey",
+    cex.lab=0.6, cex.axis=0.6, cex.main=0.6, cex.sub=0.6)
+lines(xs, yhats.p, col="blue",  type="l", lty="solid", lwd = 2)
+lines(xs, yhats.b, col="black", type="l", lty="dotted", lwd = 3)
+lines(xs, yhats,   col="red",   type="l", lty="dashed", lwd =2)
+@
+
+%We could safely release the model \code{pmodel} but not the other non-private models.
+
+%\vspace{-2em}
+
 
 %pressure phenotype, will consider just the \Sexpr{1+2} individuals with
 

@@ -1,4 +1,4 @@
-#' \code{diffpriv}: practical differential privacy in R.
+#' \code{diffpriv}: easy differential privacy in R.
 #'
 #' The \code{diffpriv} package is a collection of generic tools for privacy-aware
 #' data science, under the formal framework of differential privacy. A
