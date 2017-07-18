@@ -11,10 +11,8 @@
 ## devtools::build_vignettes()
 ## [manually update pkg version (and if necessary min R version) in README.rmd]
 ## knit README.rmd
-## source this file
-## build_site(articles = c("diffpriv.pdf", "bernstein.pdf"))
-## copy README.md from top to inst
-## a Check
+## source this file; build_site(articles = c("diffpriv.pdf", "bernstein.pdf"))
+## CHECK
 
 library(pkgdown)
 
@@ -56,3 +54,5 @@ build_site <- function (pkg = ".", path = "docs", examples = TRUE, run_dont_run 
   ## End articles
   invisible(TRUE)
 }
+
+build_site(articles = c("diffpriv.pdf", "bernstein.pdf"))

@@ -8,11 +8,12 @@ Authors@R: c(
     person("Francesco", "Aldà", email = "francesco.alda@gmail.com", role = "aut"))
 Description: An implementation of major general-purpose mechanisms for privatizing
     statistics, models, and machine learners, within the framework of differential
-    privacy of Dwork et al. (2006). Example mechanisms include the Laplace
-    mechanism for releasing numeric aggregates, and the exponential mechanism for
-    releasing set elements. A sensitivity sampler (Rubinstein & Alda, 2017) permits
-    sampling target non-private function sensitivity; combined with the generic
-    mechanisms, it permits turn-key privatization of arbitrary programs.
+    privacy of Dwork et al. (2006) <doi:10.1007/11681878_14>. Example mechanisms
+    include the Laplace mechanism for releasing numeric aggregates, and the 
+    exponential mechanism for releasing set elements. A sensitivity sampler 
+    (Rubinstein & Alda, 2017) <arXiv:1706.02562> permits sampling target 
+    non-private function sensitivity; combined with the generic mechanisms, it 
+    permits turn-key privatization of arbitrary programs.
 License: MIT + file LICENSE
 LazyData: TRUE
 Depends: R (>= 3.4.0)
