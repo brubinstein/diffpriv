@@ -4,7 +4,7 @@ Title: Easy Differential Privacy
 Version: 0.4.2
 Date: 2017-07-16
 Authors@R: c(
-    person(c("Benjamin", "I.", "P."), "Rubinstein", email = "brubinstein@unimelb.edu.au", role = c("aut", "cre")),
+    person("Benjamin", "Rubinstein", email = "brubinstein@unimelb.edu.au", role = c("aut", "cre")),
     person("Francesco", "Aldà", email = "francesco.alda@gmail.com", role = "aut"))
 Description: An implementation of major general-purpose mechanisms for privatizing
     statistics, models, and machine learners, within the framework of differential
