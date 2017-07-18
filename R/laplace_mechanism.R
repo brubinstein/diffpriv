@@ -11,7 +11,7 @@ NULL
 #' @slot target the target non-private function to be privatized, takes lists.
 #'   Defaults to a constant function. Laplace mechanism assumes functions that
 #'   release numeric vectors of fixed dimension \code{dims}.
-#' @slot gammaSensitivity \code{NA_real_} if deactive, or scalar in [0,1)
+#' @slot gammaSensitivity \code{NA_real_} if inactive, or scalar in [0,1)
 #'   indicating that responses must be RDP with specific confidence.
 #' @slot dims positive scalar numeric dimension of responses. Defaults to
 #'   \code{NA_integer_} for use with \code{sensitivitySampler()} which can

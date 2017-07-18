@@ -35,7 +35,7 @@ is superclass to:
 \code{\link{DPMech-class}}-derived objects are initialized with a problem-specific
 non-private \code{target} function. Subsequently, the
 \code{\link{releaseResponse}} method can privatize responses of \code{target}
-on input datasets. The level of correpsonding privatization depends on given
+on input datasets. The level of corresponding privatization depends on given
 privacy parameters \code{\link{DPParamsEps}} or derived parameters object.
 }
 

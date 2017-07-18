@@ -5,7 +5,7 @@
 \alias{DPMech-class}
 \title{An S4 class for differentially-private mechanisms.}
 \description{
-A base class for representing output-perturbating mechanisms in differential
+A base class for representing output-perturbing mechanisms in differential
 privacy. As this class is \code{VIRTUAL} it cannot be instantiated, but it can
 be subclassed.
 }
@@ -18,7 +18,7 @@ to \code{Inf} for use with \code{sensitivitySampler()}.}
 \item{\code{target}}{the target non-private function to be privatized, takes lists.
 Defaults to a constant function.}
 
-\item{\code{gammaSensitivity}}{\code{NA_real_} if deactive, or scalar in [0,1)
+\item{\code{gammaSensitivity}}{\code{NA_real_} if inactive, or scalar in [0,1)
 indicating that responses must be RDP with specific confidence.}
 }}
 

@@ -31,7 +31,7 @@ Defaults to \code{Inf} for use with \code{sensitivitySampler()}.}
 Defaults to a constant function. Laplace mechanism assumes functions that
 release numeric vectors of fixed dimension \code{dims}.}
 
-\item{\code{gammaSensitivity}}{\code{NA_real_} if deactive, or scalar in [0,1)
+\item{\code{gammaSensitivity}}{\code{NA_real_} if inactive, or scalar in [0,1)
 indicating that responses must be RDP with specific confidence.}
 
 \item{\code{dims}}{positive scalar numeric dimension of responses. Defaults to

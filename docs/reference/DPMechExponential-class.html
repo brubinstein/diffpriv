@@ -172,7 +172,7 @@ matrix, data frame, numeric/character vector.</p></td>
 Defaults to <code>Inf</code> for use with <code><a href='sensitivitySampler.html'>sensitivitySampler()</a></code>.</p></dd>
     <dt><code>target</code></dt><dd><p>the quality score function mapping dataset to a function on
 responses (elements of <code>responseSet</code>).</p></dd>
-    <dt><code>gammaSensitivity</code></dt><dd><p><code>NA_real_</code> if deactive, or scalar in [0,1)
+    <dt><code>gammaSensitivity</code></dt><dd><p><code>NA_real_</code> if inactive, or scalar in [0,1)
 indicating that responses must be RDP with specific confidence.</p></dd>
     <dt><code>responseSet</code></dt><dd><p>a list of possible responses of the mechanism.</p></dd>
 </dl>
@@ -284,7 +284,7 @@ indicating that responses must be RDP with specific confidence.</p></dd>
 #&gt; {
 #&gt;     function(r) sum(r == unlist(strsplit(X, "")))
 #&gt; }
-#&gt; &lt;environment: 0x000000001260d738&gt;
+#&gt; &lt;environment: 0x0000000021cc9378&gt;
 #&gt; 
 #&gt; $response
 #&gt; [1] "o"

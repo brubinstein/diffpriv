@@ -63,7 +63,7 @@ with \code{sensitivitySampler()}.}
 \item{\code{target}}{might be a closure that takes arbitrary dataset and returns a
 real-valued function on \eqn{[0,1]^l}.}
 
-\item{\code{gammaSensitivity}}{\code{NA_real_} if deactive, or scalar in [0,1)
+\item{\code{gammaSensitivity}}{\code{NA_real_} if inactive, or scalar in [0,1)
 indicating that responses must be RDP with specific confidence.}
 
 \item{\code{latticeK}}{positive scalar integer-valued numeric specifying the lattice

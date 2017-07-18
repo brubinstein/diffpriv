@@ -13,7 +13,7 @@ NULL
 #'   Defaults to \code{Inf} for use with \code{sensitivitySampler()}.
 #' @slot target the quality score function mapping dataset to a function on
 #'   responses (elements of \code{responseSet}).
-#' @slot gammaSensitivity \code{NA_real_} if deactive, or scalar in [0,1)
+#' @slot gammaSensitivity \code{NA_real_} if inactive, or scalar in [0,1)
 #'   indicating that responses must be RDP with specific confidence.
 #' @slot responseSet a list of possible responses of the mechanism.
 #'
