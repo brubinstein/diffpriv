@@ -1,8 +1,8 @@
 Package: diffpriv
 Type: Package
 Title: Easy Differential Privacy
-Version: 0.4.2
-Date: 2017-07-16
+Version: 0.4.2.9000
+Date: 2017-07-18
 Authors@R: c(
     person("Benjamin", "Rubinstein", email = "brubinstein@unimelb.edu.au", role = c("aut", "cre")),
     person("Francesco", "Aldà", email = "francesco.alda@gmail.com", role = "aut"))

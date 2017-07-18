@@ -3,7 +3,7 @@
 diffpriv <img src="man/figures/logo.png" align="right" />
 =========================================================
 
-[![packageversion](https://img.shields.io/badge/Package%20version-0.4.2-orange.svg?style=flat-square)](commits/master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/diffpriv)](https://cran.r-project.org/package=diffpriv) [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.4.2.9000-orange.svg?style=flat-square)](commits/master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/diffpriv)](https://cran.r-project.org/package=diffpriv) [![Travis Build Status](https://travis-ci.org/brubinstein/diffpriv.svg?branch=master)](https://travis-ci.org/brubinstein/diffpriv) [![Coverage Status](https://img.shields.io/codecov/c/github/brubinstein/diffpriv/master.svg)](https://codecov.io/github/brubinstein/diffpriv?branch=master) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](http://choosealicense.com/licenses/mit/) [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.0-6666ff.svg)](https://cran.r-project.org/)
 
 Overview
 --------
@@ -16,7 +16,10 @@ Installation
 Obtaining `diffpriv` is easy. From within R:
 
 ``` r
-##  Install the development version of diffpriv from GitHub:
+## Install the release version of diffpriv from CRAN:
+install.packages("diffpriv")
+
+## Install the latest development version of diffpriv from GitHub:
 install.packages("devtools")
 devtools::install_github("brubinstein/diffpriv")
 ```

@@ -20,7 +20,7 @@ set.seed(3033362) # for reproducibility
 ```{r, echo = FALSE}                       
 #version <- as.vector(read.dcf('DESCRIPTION')[, 'Version'])     
 #version <- gsub('-', '.', version)                       
-version <- "0.4.2"
+version <- "0.4.2.9000"
 ```                       
 
 ```{r, echo = FALSE}         
@@ -54,7 +54,10 @@ sensitivity sampling in place of theoretical sensitivity analysis.
 Obtaining `diffpriv` is easy. From within R:
 
 ```{r eval=FALSE}
-##  Install the development version of diffpriv from GitHub:
+## Install the release version of diffpriv from CRAN:
+install.packages("diffpriv")
+
+## Install the latest development version of diffpriv from GitHub:
 install.packages("devtools")
 devtools::install_github("brubinstein/diffpriv")
 ```
