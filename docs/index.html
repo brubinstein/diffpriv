@@ -96,14 +96,14 @@
 <p>Obtaining <code>diffpriv</code> is easy. From within R:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">##  Install the development version of diffpriv from GitHub:
 <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools::<span class="kw">install_github</span>(<span class="st">"brubinstein/diffpriv"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"brubinstein/diffpriv"</span>)</code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>A typical example in differential privacy is privately releasing a simple <code>target</code> function of privacy-sensitive input data <code>X</code>. Say the mean of <code>numeric</code> data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## a target function we'd like to run on private data X, releasing the result
-target &lt;-<span class="st"> </span>function(X) <span class="kw">mean</span>(X)</code></pre></div>
+target &lt;-<span class="st"> </span><span class="cf">function</span>(X) <span class="kw">mean</span>(X)</code></pre></div>
 <p>First load the <code>diffpriv</code> package (installed as above) and construct a chosen differentially-private mechanism for privatizing <code>target</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## target seeks to release a numeric, so we'll use the Laplace mechanism---a
 ## standard generic mechanism for privatizing numeric responses
@@ -113,15 +113,15 @@ mech &lt;-<span class="st"> </span><span class="kw"><a href="reference/DPMechLap
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## set a dataset sampling distribution, then estimate target sensitivity with
 ## sufficient samples for subsequent mechanism responses to achieve random
 ## differential privacy with confidence 1-gamma
-distr &lt;-<span class="st"> </span>function(n) <span class="kw">rnorm</span>(n)
+distr &lt;-<span class="st"> </span><span class="cf">function</span>(n) <span class="kw">rnorm</span>(n)
 mech &lt;-<span class="st"> </span><span class="kw"><a href="reference/sensitivitySampler.html">sensitivitySampler</a></span>(mech, <span class="dt">oracle =</span> distr, <span class="dt">n =</span> <span class="dv">5</span>, <span class="dt">gamma =</span> <span class="fl">0.1</span>)
 <span class="co">#&gt; Sampling sensitivity with m=285 gamma=0.1 k=285</span>
-mech@sensitivity    ## DPMech and subclasses are S4: slots accessed via @
+mech<span class="op">@</span>sensitivity    ## DPMech and subclasses are S4: slots accessed via @
 <span class="co">#&gt; [1] 0.8089517</span></code></pre></div>
 <p>With a sensitivity-calibrated mechanism in hand, we can release private responses on a dataset <code>X</code>, displayed alongside the non-private response for comparison:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.328</span>,-<span class="fl">1.444</span>,-<span class="fl">0.511</span>,<span class="fl">0.154</span>,-<span class="fl">2.062</span>) <span class="co"># length is sensitivitySampler() n</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.328</span>,<span class="op">-</span><span class="fl">1.444</span>,<span class="op">-</span><span class="fl">0.511</span>,<span class="fl">0.154</span>,<span class="op">-</span><span class="fl">2.062</span>) <span class="co"># length is sensitivitySampler() n</span>
 r &lt;-<span class="st"> </span><span class="kw"><a href="reference/releaseResponse.html">releaseResponse</a></span>(mech, <span class="dt">privacyParams =</span> <span class="kw"><a href="reference/DPParamsEps-class.html">DPParamsEps</a></span>(<span class="dt">epsilon =</span> <span class="dv">1</span>), <span class="dt">X =</span> X)
-<span class="kw">cat</span>(<span class="st">"Private response r$response:   "</span>, r$response,
+<span class="kw">cat</span>(<span class="st">"Private response r$response:   "</span>, r<span class="op">$</span>response,
   <span class="st">"</span><span class="ch">\n</span><span class="st">Non-private response target(X):"</span>, <span class="kw">target</span>(X))
 <span class="co">#&gt; Private response r$response:    -1.119506 </span>
 <span class="co">#&gt; Non-private response target(X): -0.707</span></code></pre></div>

@@ -12,7 +12,8 @@
 ## [manually update pkg version (and if necessary min R version) in README.rmd]
 ## knit README.rmd
 ## source this file
-## build_site(articles = c("diffpriv.pdf", "bernstein.pdf")
+## build_site(articles = c("diffpriv.pdf", "bernstein.pdf"))
+## copy README.md from top to inst
 ## a Check
 
 library(pkgdown)

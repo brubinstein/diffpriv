@@ -11,3 +11,4 @@
 ^build_site\.R$
 ^present$
 ^cran-comments\.md$
+^README\.md$
