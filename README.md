@@ -1,4 +1,3 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 diffpriv <img src="man/figures/logo.png" align="right" />
 =========================================================
