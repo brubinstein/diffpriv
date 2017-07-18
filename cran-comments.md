@@ -5,5 +5,7 @@
 ## R CMD check results
 There were no ERRORs, WARNINGs or NOTEs.
 
+However on local win7, pandoc check WARNs about fetching from shields.io
+
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
