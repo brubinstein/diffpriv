@@ -32,6 +32,7 @@
 \newcommand{\Exp}[1]{\ensuremath{\mathbb{E}\left[#1\right]}}
 \newcommand{\indic}[1]{\ensuremath{\mathbf{1}\left[#1\right]}}
 \newcommand{\code}[1]{\texttt{#1}\xspace}
+\newcommand{\myurl}[1]{\tetxttt{#1}} % \url for JMLR, \texttt for CRAN
 
 % Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
 
@@ -96,33 +97,36 @@ set.seed(53079239)
 Differential privacy~\citep{dwork2006calibrating} has quickly become a
 key framework for semantic guarantees of data privacy when releasing
 analysis on privacy-sensitive data to untrusted third parties.
-A great deal of its popularity is owed to a suite of generic mechanisms
+The framework's popularity is in part due to a suite of generic mechanisms
 for privatizing non-private target functions of data \ie statistics,
-estimation procedures, and learners. Common to these generic mechanisms
-is the requirement that the non-private target's sensitivity to dataset
-perturbation is known and bounded. In all except the most trivial
-analyses, bounding sensitivity is prohibitively involved. This paper
+estimation procedures, and learners. Common to most generic mechanisms
+is the requirement that the non-private target's sensitivity to data set
+perturbation is known and bounded. Unfortunately, bounding sensitivity can be
+prohibitively complex for potential end users. This paper
 describes the \pck \R package that implements generic
 mechanisms for differential privacy, along with our recent sensitivity
 sampler that replaces exact sensitivity bounds with empirical
 estimates~\citep{rubinstein2017sampler}. As a result, \pck privatizes a wide
 range of procedures under random differential privacy~\citep{hall2012random},
 automatically without mathematical analysis and in many cases achieving high
-utility. \pck is available from \texttt{https://github.com/brubinstein/diffpriv} under an open-source license.
+utility. \pck v0.4.2 is available from
+\myurl{https://brubinstein.github.io/diffpriv/} the project homepage and CRAN
+from \myurl{https://cran.r-project.org/package=diffpriv} under an open-source
+license.
 
 \section{Generic Mechanisms for Differential Privacy}
 \label{sec:generic}
 
 Fundamental to differential privacy is a privacy-sensitive
-\term{dataset} (or \term{database}) $D\in\cD^n$ on \term{domain} \cD.
-In \pck a dataset can be a \texttt{list}, \texttt{matrix},
-\texttt{data.frame}, \texttt{vector}. We say that a pair of
+\term{data set} (or \term{database}) $D\in\cD^n$ on \term{domain} \cD.
+In \pck a data set can be a \texttt{list}, \texttt{matrix},
+\texttt{data.frame} or \texttt{vector}. We say that a pair of
 databases $D,D'\in\cD^n$ is \term{neighboring} if they differ on
 exactly one record. While individual records should not
 be revealed, we aim to release aggregate information
 on $D$ with a mechanism. A \term{mechanism} $M: \cD^n \to \cR$ is a
 random-valued function of databases taking values in a response set \cR;
-implemented in \pck as virtual class \code{DPMech}.
+implemented in \pck as virtual (abstract) class \code{DPMech}.
 
 \begin{definition}[\citealp{dwork2006calibrating}]
 For $\epsilon>0$, mechanism $M: \cD^n \to \cR$ preserves
@@ -134,34 +138,34 @@ Alternatively for $\delta\in(0,1)$, relaxed
 $\Pr{M(D)\in R}\leq \exp(\epsilon)\cdot\Pr{M(D')\in R}+\delta$.
 \end{definition}
 
-Mechanism $M$ preserves differential privacy if its response distributions are
+A mechanism preserves DP if its response distributions are
 close on neighboring pairs: an adversary cannot determine an
-unknown record from $M$ responses, even with knowledge of the other $n-1$
+unknown record from responses, even with knowledge of the remaining
 records.
 Privacy parameters $\epsilon$ ($\epsilon,\delta$) are encapsulated in
-class \code{DPParamsEps} (\code{DPParamsDel} respectively).
-Virtual \code{DPMech} generic method
+class \code{DPParamsEps} (\code{DPParamsDel}).
+\code{DPMech} generic method
 \texttt{releaseResponse(mechanism, privacyParams, X)} takes privacy
-parameters along with sensitive dataset. Most generic mechanisms in
-differential privacy share a number of properties leveraged by the \pck package
+parameters and a sensitive dataset, to private response. Most generic
+mechanisms in
+DP share a number of properties leveraged by the \pck package
 as follows.
 
-\paragraph{Privatizing a target function.} Many mechanisms $M: \cD^n\to\cR$
+\textbf{Privatizing a target function.} Many mechanisms $M: \cD^n\to\cR$
 seek to privatize a non-private \term{target} function $f: \cD^n\to\cB$, with
-range \cB often (but not always!) coinciding with \cR. Accordingly
+range \cB often coinciding with \cR. Accordingly
 \code{DPMech} objects are initialized with \code{target} slot of type
 \code{function}. A mechanism's \code{releaseResponse()} method calls
 \code{target} to form privacy-preserving responses.
 
-\paragraph{Normed target range space.} Target $f$'s output space \cB
+\textbf{Normed target range space.} Target $f$'s output space \cB
 is typically imbued with a norm, denoted $\|\cdot\|_{\cB}$, needed
 for measuring the sensitivity of $f$'s outputs to input perturbation. \pck flexibly
 represents this norm within \code{DPMech} objects as described next.
 
-\paragraph{Sensitivity-induced privacy.} Many mechanisms achieve differential
-privacy by calibrating randomization to the sensitivity of the target function
-$f$. Targets that are relatively insensitive (sensitive) to perturbing
-input $D$ to neighboring $D'$ need relatively little (large) response
+\textbf{Sensitivity-induced privacy.} Many mechanisms achieve differential
+privacy by calibrating randomization to the sensitivity of target
+$f$. Insensitive targets need less response
 randomization. On a pair of neighboring databases $D,D'\in\cD^n$ the
 \term{sensitivity} of $f$ is measured as $\Delta(D,D')= \|f(D) - f(D')\|_{\cB}$.
 \term{Global sensitivity} is the largest such value
@@ -175,39 +179,38 @@ $\Delta$ achieves
 $\Pr{M_{\Delta}(D)\in R}\leq\exp(\epsilon)\cdot\Pr{M_{\Delta}(D')\in R}$
 for all $R\subseteq\cR$. When run with $\Delta=\overline{\Delta}$,
 this condition holds for all neighboring pairs: $M_{\overline{\Delta}}$
-satisfies $\epsilon$-differential privacy. Similarly for
-$(\epsilon,\delta)$-differential privacy. This is essentially how differential
-privacy is proved for most generic mechanisms, included those in \pck.
+satisfies $\epsilon$-DP. Similarly for
+$(\epsilon,\delta)$-DP. In fact this is how differential
+privacy is typically proved for such generic mechanisms.
 \code{DPMech} objects can be initialized with a \code{sensitivity} argument,
 stored in an S4 slot of the same name. If the user provides a manually-derived
 global sensitivity bound $\overline{\Delta}$, then \code{releaseResponse()}
 responses preserve $\epsilon$- or ($\epsilon,\delta$)-DP (depending on
 the specific mechanism). We now demonstrate this use case.
 
-\paragraph{Example: Laplace mechanism.}
+\subsection{Example: Laplace Mechanism Release of the Sample Mean}
 \pck implements Laplace~\citep{dwork2006calibrating},
 Gaussian~\citep{dwork2014algorithmic},
 exponential~\citep{mcsherry2007mechanism}, and
 Bernstein~\citep{alda2017bernstein} mechanisms as \code{DPMech} subclasses
 \code{DPMechLaplace}, \code{DPMechGaussian}, \code{DPMechExponential}, and
 \code{DPMechBernstein}. An exponential example is included below.
-\code{DPMechLaplace} releases numeric vectors, and requires that \cB be numeric
-$\reals^d$ for some
-$d$ and adopts the $L_1$ norm (sum of absolutes) for $\|\cdot\|_{\cB}$. The
+\code{DPMechLaplace} releases numeric vectors,
+adopting the $L_1$ norm (sum of absolutes) for $\|\cdot\|_{\cB}$. The
 mechanism releases vectors in $\cR=\cB=\reals^d$ by adding an i.i.d. sample of
 $d$ Laplace-distributed random variables with means 0 and scales
-$\overline{\Delta}/\epsilon$ to $f(D)$ to achieve $\epsilon$-differential
-privacy. \code{DPMechGaussian} also privatizes numeric responses but under
+$\overline{\Delta}/\epsilon$ to $f(D)$ to achieve $\epsilon$-DP.
+\code{DPMechGaussian} also privatizes numeric responses but under
 $L_2$-sensitivity and weaker $(\epsilon,\delta)$-DP; \code{DPMechBernstein}
 leverages the Laplace mechanism to release multivariate real-valued functions.
 
 We next demonstrate Laplace privatization of the sample mean on
-bounded data in $\cD^n=[0,1]^n$, for which \cB dimension \code{dims} $d$ is
-one. Global sensitivity is readily bounded as $1/n$: For any
-neighboring pair $D,D'\in[0,1]^n$,
-$\Delta(D,D')=n^{-1}\left|\sum_{i=1}^n D_i - \sum_{i=1}^n D'_i\right|$.
-Since $n-1$ records are identical, and all records are in $[0,1]$, this is
-$|D_n - D'_n|/n \leq 1/n$.
+bounded data $\cD^n=[0,1]^n$, for which \cB dimension \code{dims} is
+one. Global sensitivity is readily bounded as $1/n$. %: For any
+%neighboring pair $D,D'\in[0,1]^n$,
+%$\Delta(D,D')=n^{-1}\left|\sum_{i=1}^n D_i - \sum_{i=1}^n D'_i\right|$.
+%Since $n-1$ records are identical, and all records are in $[0,1]$, this is
+%$|D_n - D'_n|/n \leq 1/n$.
 
 <<genericLaplace, include=TRUE, echo=TRUE, results='markup'>>=
 library(diffpriv)
@@ -270,27 +273,28 @@ After \code{sensitivitySampler()}, subsequent \code{releaseResponse()} results
 have a privacy parameter slot of type \code{DPParamsGam} indicating response
 RDP.
 
-\paragraph{Example: Exponential mechanism.} All \code{DPMech} subclasses are
-sensitivity-induced private and can be sensitivity sampled; we demonstrate the
-exponential mechanism here. Exponential privately optimizes an
-application-specific objective (or score, utility) $s(r)$ of candidate
-response $r\in\cR$, with response distribution proportional to
+\subsection{Example: Frequent Characters with Sensitivity Sampling}
+All \code{DPMech} subclasses are
+sensitivity-induced private and can be sensitivity sampled. We demonstrate
+the exponential mechanism, which privately optimizes a given
+objective $s(r)$ of candidate
+response $r\in\cR$. Its response distribution is proportional to
 $\exp(\epsilon \cdot s(r) / (2\Delta))$. Typically $s$ depends on
 input $D$, and so \code{DPMechExponential} is initialized with \code{target}
-that takes $D$ and outputs a score function. That is, $\cB=\reals^{\cR}$ is a
+that takes $D$ and outputs score function $s(r)$. That is, $\cB=\reals^{\cR}$ is a
 real-valued function space on \cR and the class's \code{sensitivityNorm()}
 implements the sup-norm (\cf \citealp{rubinstein2017sampler}). In practice,
 users supply \code{target} as an \R closure as demonstrated below. Given
-global \code{sensitivity} of \code{target}, the mechanism preserves $\epsilon$-DP;
+\code{sensitivity} of \code{target}, the mechanism preserves $\epsilon$-DP;
 if \code{sensitivitySampler()} estimates sensitivity with some \code{gamma},
-then RDP is preserved at confidence $\gamma=$\code{gamma}.
+then confidence $\gamma=$\code{gamma} RDP is preserved.
 
-Applying these ideas to find the most frequent a--z character within a
-dataset of top-10 computer scientists from Semantic Scholar, subject to privacy of
-individuals. The exponential mechanism privately maximizes total frequency. But
+We can apply these ideas to find the most frequent a--z character within the
+top-10 computer scientist names from Semantic Scholar, subject to
+individual privacy. Exponential privately maximizes total frequency. But
 without bounded name lengths, this function has unbounded global sensitivity. We
-therefore use sensitivity sampler for $(1,0.1)$-RDP, with an oracle that samples
-representative U.S. names based on \code{randomNames}.
+therefore use the sensitivity sampler for $(1,0.1)$-RDP, with an oracle that samples
+representative U.S. names with package \code{randomNames}.
 
 <<samplerExponential, include=TRUE, echo=TRUE, results='markup'>>=
 library(randomNames) ## a package that generates representative random names

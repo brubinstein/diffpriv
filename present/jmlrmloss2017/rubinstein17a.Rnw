@@ -32,7 +32,7 @@
 \newcommand{\Exp}[1]{\ensuremath{\mathbb{E}\left[#1\right]}}
 \newcommand{\indic}[1]{\ensuremath{\mathbf{1}\left[#1\right]}}
 \newcommand{\code}[1]{\texttt{#1}\xspace}
-\newcommand{\myurl}[1]{\tetxttt{#1}} % \url for JMLR, \texttt for CRAN
+\newcommand{\myurl}[1]{\url{#1}} % \url for JMLR, \texttt for CRAN
 
 % Heading arguments are {volume}{year}{pages}{submitted}{published}{author-full-names}
 
@@ -336,6 +336,6 @@ of the Australian Research Council (DE160100584) and the
 DFG Research Training Group GRK 1817/1 respectively.}
 
 \vskip 0.2in
-\bibliography{diffpriv}
+\bibliography{rubinstein17a}
 
 \end{document}
