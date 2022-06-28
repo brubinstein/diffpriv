@@ -43,7 +43,7 @@ library(diffpriv)
 mech <- DPMechLaplace(target = target)
 ```
 
-To run `mech` on a dataset `X` we must first determine the sensitivity of `target` to small changes to input dataset. One avenue is to analytically bound sensitivity (on paper; see the [vignette](http://brubinstein.github.io/diffpriv/articles/diffpriv.pdf)) and supply it via the `sensitivity` argument of mechanism construction: in this case not hard if we assume bounded data, but in general sensitivity can be very non-trivial to calculate manually. The other approach, which we follow in this example, is sensitivity sampling: repeated probing of `target` to estimate sensitivity automatically. We need only specify a distribution for generating random probe datasets; `sensitivitySampler()` takes care of the rest. The price we pay for this convenience is the weaker form of random differential privacy.
+To run `mech` on a dataset `X` we must first determine the sensitivity of `target` to small changes to input dataset. One avenue is to analytically bound sensitivity (on paper; see the [vignette](http://brubinstein.github.io/diffpriv/articles/diffpriv.pdf)) and supply it via the `sensitivity` argument of mechanism construction: in this case, it is not hard if we assume bounded data, but in general sensitivity can be very non-trivial to calculate manually. The other approach, which we follow in this example, is sensitivity sampling: repeated probing of `target` to estimate sensitivity automatically. We need only specify a distribution for generating random probe datasets; `sensitivitySampler()` takes care of the rest. The price we pay for this convenience is the weaker form of random differential privacy.
 
 ``` r
 ## set a dataset sampling distribution, then estimate target sensitivity with
